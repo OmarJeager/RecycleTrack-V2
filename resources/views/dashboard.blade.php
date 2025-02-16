@@ -12,6 +12,10 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+            <div class="mt-4">
+                <a href="{{ route('machineEntries.create') }}" class="text-blue-500 hover:text-blue-700">
+                    Create New Machine Entry
+                </a>
+            </div>
         </div>
-    </div>
 </x-app-layout>

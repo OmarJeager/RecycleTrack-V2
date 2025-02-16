@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Data</title>
+</head>
+<body>
+    <h2>Add New Data</h2>
+    
+    @if(session('success'))
+        <p style="color: green;">{{ session('success') }}</p>
+    @endif
+
+    <form action="{{ route('machineEntries.store') }}" method="POST">
+        @csrf
+
+        <!-- Machines Dropdown -->
+        <label for="machine_id">Machine:</label>
+        <select name="machine_id" required>
+            <option value="">Select a Machine</option>
+            @foreach($machines as $machine)
+                <option value="{{ $machine->id }}">{{ $machine->machines }}</option>
+            @endforeach
+        </select>
+
+        <label for="refus_machine">Refus Machine:</label>
+        <input type="number" name="refus_machine" required>
+
+        <label for="refus_prtototype">Refus Prototype:</label>
+        <input type="number" name="refus_prtototype" required>
+
+        <label for="matricule">Matricule:</label>
+        <input type="text" name="matricule" required>
+
+        <label for="production">Production:</label>
+        <input type="number" name="production" required>
+
+        <label for="nb_reg">NB Reg:</label>
+        <input type="number" name="nb_reg" required>
+
+        <label for="maint">Maint:</label>
+        <input type="number" name="maint" required>
+
+        <label for="pcl">PCL:</label>
+        <input type="number" name="pcl" required>
+
+        <label for="Group">Group:</label>
+        <input type="text" name="Group" value="{{$machine->machines}}" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+    
+    
