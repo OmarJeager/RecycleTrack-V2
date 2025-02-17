@@ -11,10 +11,21 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="mt-4">
-        <a href="{{ route('admin.sertissage') }}" class="text-blue-500 hover:text-blue-700">
-            Show All  Machine Entry
-        </a>
+</a>
+<div class="mt-4">
+    <a href="{{ route('torsado.create') }}" class="text-blue-500 hover:text-blue-700">
+        Create New Torsado Machine
+    </a>
+        <div class="mt-4">
+            <a href="{{ route('admin.sertissage') }}" class="text-blue-500 hover:text-blue-700">
+                Show All  Machine Entry</a>
+    
+        </div>
+        <div class="mt-4">
+            <a href="{{ route('admin.torsado') }}" class="text-blue-500 hover:text-blue-700">
+                Show All  Torsado</a>
+    
+        </div>
         {{-- 
         <a href="{{ route('sertissage.index') }}" class="text-blue-500 hover:text-blue-700">
             {{ __('All Machine') }}

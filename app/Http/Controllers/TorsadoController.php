@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MachineEntry;
-use App\Models\Sertissage;
-use Hamcrest\Core\Set;
+use App\Models\Toursado;
+use App\Models\ToursadoComponets;
 use Illuminate\Http\Request;
 
-class MachineEntryController extends Controller
+class TorsadoController extends Controller
 {
     public function create(){
-        $machines=Sertissage::all();
-        return view('sertissages.create',compact('machines'));
+        $machines=Toursado::all();
+        return view('torsado.create',compact('machines'));
     }
-    public function store(Request $request){
+    //
+    public function storedata(Request $request){
         //dd($request->all());
         $validated = $request->validate([
             'machine_id' => 'required|array',
@@ -50,6 +50,7 @@ class MachineEntryController extends Controller
             'date'=>'required|array',
         ]);
          // Prepare the data to be stored
+         
     $data = [];
 
     $count = count($request->machine_id);
@@ -93,8 +94,8 @@ class MachineEntryController extends Controller
     //dd($data);
 
     // Store the data in the database
-    MachineEntry::insert($data);
+    ToursadoComponets::insert($data);
 
-    return redirect()->route('sertissage.create')->with('success', 'Machines details stored successfully.');
+    return redirect()->route('add.create')->with('success', 'Machines details stored successfully.');
     }
 }

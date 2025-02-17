@@ -115,7 +115,7 @@
             <th>NB Heures</th>
         </thead>
         <tbody>
-            <form action="{{ route('sertissage.store') }}" method="post">
+            <form action="{{ route('userto.storedata') }}" method="post">
                 @csrf
                 <input type="number" name="wk" id="wk" value="0">
                 <input type="text" name="name_mc" value="ur name">

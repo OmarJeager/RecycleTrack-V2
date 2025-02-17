@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Toursado;
+use App\Models\ToursadoComponets;
 use Illuminate\Http\Request;
-use App\Models\Sertissage;
-use App\Models\MachineEntry;
-class AdminController extends Controller
+
+class AdminTorsadoController extends Controller
 {
     public function index()
     {
-        $machines = MachineEntry::all();
-        $sertissages = Sertissage::all();
-        return view('admin.sertissage.index', compact('machines','sertissages'));
+        $machines = ToursadoComponets::all();
+        $sertissages = Toursado::all();
+        return view('admin.torsado.index', compact('machines','sertissages'));
     }
     public function create()
     {
-        return view('admin.sertissage.create');
+        return view('admin.torsado.create');
     }
     public function store(Request $request)
     {
@@ -23,7 +24,7 @@ class AdminController extends Controller
         $request->validate([
             'machines'=> 'required',
         ]);
-        Sertissage::create([
+        Toursado::create([
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');

@@ -13,8 +13,13 @@
                 </div>
             </div>
             <div class="mt-4">
-                <a href="{{ route('machineEntries.create') }}" class="text-blue-500 hover:text-blue-700">
-                    Create New Machine Entry
+                <a href="{{ route('sertissage.create') }}" class="text-blue-500 hover:underline">
+                    Create Sertissage
+                </a>
+            </div>
+            <div class="mt-4">
+                <a href="{{ route('add.create') }}" class="text-blue-500 hover:underline">
+                    Create Torsadodd
                 </a>
             </div>
         </div>

@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MachineEntry extends Model
+class ToursadoComponets extends Model
 {
+    //
     protected $fillable = [
         'machine_id',
         'name',
@@ -39,3 +40,4 @@ class MachineEntry extends Model
         'name_cm',
     ];
 }
+
