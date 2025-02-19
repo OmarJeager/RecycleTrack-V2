@@ -88,38 +88,31 @@
         <thead>
             <th>Machines</th>
             <th>Matricule</th>
-            <th>Echantillon CFA</th>
-            <th>Refus Machine</th>
-            <th>Refus Prototype</th>
-            <th>Refus MC</th>
-            <th>Production</th>
-            <th>NB Reg</th>
-            <th>Maint</th>
-            <th>PCL</th>
-            <th>Refus MC</th>
-            <th>Production</th>
-            <th>NB Reg</th>
-            <th>Maint</th>
-            <th>PCL</th>
-            <th>Refus MC</th>
-            <th>Production</th>
-            <th>NB Reg</th>
-            <th>Maint</th>
-            <th>PCL</th>
-            <th>Refus MC</th>
-            <th>Production</th>
-            <th>NB Reg</th>
-            <th>Maint</th>
-            <th>PCL</th>
-            <th>NB Carte Kan</th>
-            <th>NB Heures</th>
+            <th>Obj/NB reg</th>
+            <th>nb reg</th>
+            <th>production</th>
+            <th>dpn de bobine </th>
+            <th>mp</th>
+            <th>temps mort </th>
+            <th>mce</th>
+            <th>reglage</th>
+            <th>process</th>
+            <th>nb defanut</th>
+            <th>nb heures </th>
+            <th>metal</th>
+            <th>echanttion de cfa</th>
+            <th>echantillon de raglage </th>
+            <th>refus machine </th>
+            <th>refus de qualite</th>
+            <th> refus prototype </th>
+            <th>total scrap machine </th>
         </thead>
         <tbody>
-            <form action="{{ route('userto.storedata') }}" method="post">
+            <form action="{{ route('composotwouser.store') }}" method="post">
                 @csrf
-                <input type="text" name="name_mc" placeholder="contre maitre name" required>
-                <select name="group" id="group" required>
-                    <option value="">Choice ur Group</option>
+                <input type="text" name="namecm" placeholder="contre maitre name">
+                <select name="group" required>
+                    <option value="">Choice ur group</option>
                     <option value="M">M</option>
                     <option value="S">S</option>
                     <option value="N">N</option>
@@ -131,33 +124,30 @@
                 <tr>
                     <td>{{ $m->machines }}</td>
                     <td><input type="number" name="matricule[]" value="0"></td>
-                    <td><input type="number" name="echantillon_cfa[]" value="0"></td>
-                    <td><input type="number" name="refus_machine[]" value="0"></td>
-                    <td><input type="number" name="refus_prototype[]" value="0"></td>
-                    <td><input type="number" name="refus_mc[]" value="0"></td>
+                    <td><input type="number" name="objnbreg[]" value="0"></td>
+                    <td><input type="number" name="nbreg[]" value="0"></td>
                     <td><input type="number" name="production[]" value="0"></td>
-                    <td><input type="number" name="nb_reg[]" value="0"></td>
-                    <td><input type="number" name="maint[]" value="0"></td>
-                    <td><input type="number" name="pcl[]" value="0"></td>
-                    <td><input type="number" name="refus_mc2[]" value="0"></td>
-                    <td><input type="number" name="production2[]" value="0"></td>
-                    <td><input type="number" name="nb_reg2[]" value="0"></td>
-                    <td><input type="number" name="maint2[]" value="0"></td>
-                    <td><input type="number" name="pcl2[]" value="0"></td>
-                    <td><input type="number" name="refus_mc3[]" value="0"></td>
-                    <td><input type="number" name="production3[]" value="0"></td>
-                    <td><input type="number" name="nb_reg3[]" value="0"></td>
-                    <td><input type="number" name="maint3[]" value="0"></td>
-                    <td><input type="number" name="pcl3[]" value="0"></td>
-                    <td><input type="number" name="refus_mc4[]" value="0"></td>
-                    <td><input type="number" name="production4[]" value="0"></td>
-                    <td><input type="number" name="nb_reg4[]" value="0"></td>
-                    <td><input type="number" name="maint4[]" value="0"></td>
-                    <td><input type="number" name="pcl4[]" value="0"></td>
-                    <td><input type="number" name="nb_carte_kan[]" value="0"></td>
-                    <td><input type="number" name="nb_heures[]" value="0"></td>
+                    <td><input type="number" name="dpndebobine[]" value="0"></td>
+                    <td><input type="number" name="mp[]" value="0"></td>
+                    <td><input type="number" name="tempsmort[]" value="0"></td>
+                    <td><input type="number" name="mce[]" value="0"></td>
+                    <td><input type="number" name="reglage[]" value="0"></td>
+                    <td><input type="number" name="process[]" value="0"></td>
+                    <td><input type="number" name="nbdeafaut[]" value="0"></td>
+                    <td><input type="number" name="nbheures[]" value="0"></td>
+                    <td><input type="number" name="metal[]" value="0"></td>
+                    <td><input type="number" name="echantilliondecfa[]" value="0"></td>
+                    <td><input type="number" name="echantilliondereglage[]" value="0"></td>
+                    <td><input type="number" name="refusmachine[]" value="0"></td>
+                    <td><input type="number" name="refusqualite[]" value="0"></td>
+                    <td><input type="number" name="refusprototype[]" value="0"></td>
+                    <td><input type="number" name="totalscrapemachine[]" value="0"></td>
+
                 </tr>
                 @endforeach
+                <input type="number" name="fill" value="0">
+                <input type="number" name="scrappic" value="0">
+                <input type="text" name="terminal" value="0">
                 <button type="submit">Save</button>
             </form>
         </tbody>

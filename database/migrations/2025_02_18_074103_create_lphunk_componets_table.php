@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('toursado_componets', function (Blueprint $table) {
+        Schema::create('lphunk_componets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('machine_id')->constrained('toursados')->onDelete('cascade'); // Link to machines table
-                $table->string('name')->default('unknown');
-                $table->integer('matricule')->default(0);
-                $table->integer('echantillon_cfa')->default(0);
-                $table->integer('refus_machine')->default(0);
-                $table->integer('refus_prototype')->default(0);
-                $table->integer('refus_mc')->default(0);
-                $table->integer('production')->default(0);
-                $table->integer('nb_reg')->default(0);
-                $table->integer('maint')->default(0);
-                $table->integer('pcl')->default(0);
-                $table->integer('refus_mc2')->default(0);
-                $table->integer('production2')->default(0);
-                $table->integer('nb_reg2')->default(0);
+            $table->foreignId('machine_id')->constrained('lphunks')->onDelete('cascade'); // Link to machines table
+            $table->string('name')->default('unknown');
+            $table->integer('matricule')->default(0);
+            $table->integer('echantillon_cfa')->default(0);
+            $table->integer('refus_machine')->default(0);
+            $table->integer('refus_prototype')->default(0);
+            $table->integer('refus_mc')->default(0);
+            $table->integer('production')->default(0);
+            $table->integer('nb_reg')->default(0);
+            $table->integer('maint')->default(0);
+            $table->integer('pcl')->default(0);
+            $table->integer('refus_mc2')->default(0);
+            $table->integer('production2')->default(0);
+            $table->integer('nb_reg2')->default(0);
                 $table->integer('maint2')->default(0);
                 $table->integer('pcl2')->default(0);
                 $table->integer('refus_mc3')->default(0);
@@ -41,7 +41,7 @@ return new class extends Migration
                 $table->integer('pcl4')->default(0);
                 $table->integer('nb_carte_kan')->default(0);
                 $table->integer('nb_heures')->default(0);
-                $table->string('group')->default('M');
+                $table->string('group')->default('unknown');
                 $table->string('name_mc')->default('unknown');
                 $table->date('date')->default(now());
             $table->timestamps();
@@ -53,6 +53,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('toursado_componets');
+        Schema::dropIfExists('lphunk_componets');
     }
 };

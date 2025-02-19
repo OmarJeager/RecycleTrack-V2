@@ -22,5 +22,25 @@
                     Create Torsadodd
                 </a>
             </div>
+            <div class="mt-4">
+                <a href="{{ route('lphunkuser.create') }}" class="text-blue-500 hover:underline">
+                    Create LP Hunk
+                </a>
+            </div>
+            <div class="mt-4">
+                <a href="{{ route('composetwouser.create') }}" class="text-blue-500 hover:underline">
+                    Create Compose Two
+                </a>
+            </div>
+            <div class="mt-4">
+                <a href="{{ route('usercomposothree.create') }}" class="text-blue-500 hover:underline">
+                    Create Compose three
+                </a>
+            </div>
+            <div class="mt-4">
+                <a href="{{ route('usercomposofour.create') }}" class="text-blue-500 hover:underline">
+                    Create Compose Four
+                </a>
+            </div>
         </div>
 </x-app-layout>

@@ -115,11 +115,11 @@
             <th>NB Heures</th>
         </thead>
         <tbody>
-            <form action="{{ route('userto.storedata') }}" method="post">
+            <form action="{{ route('lphunkuser.store') }}" method="post">
                 @csrf
                 <input type="text" name="name_mc" placeholder="contre maitre name" required>
                 <select name="group" id="group" required>
-                    <option value="">Choice ur Group</option>
+                    <option value="">Choice ur group</option>
                     <option value="M">M</option>
                     <option value="S">S</option>
                     <option value="N">N</option>

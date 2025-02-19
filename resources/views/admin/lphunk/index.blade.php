@@ -7,7 +7,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Production Data</title>
+    <title>Document</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,7 +51,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
             background-color: #fff;
         }
         th {
-            background-color: #6a4caf;
+            background-color: #4CAF50;
             color: white;
             text-transform: uppercase;
         }
@@ -78,18 +78,14 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
     </style>
 </head>
 <body>
-    <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
+    <h1>Date: {{ Carbon::now() }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 
     @foreach ($groupedMachines as $date => $machinesForDate)
-        @php
-            $weekNumber = 'W' . Carbon::parse($date)->format('W'); // Get week number
-        @endphp
-
-        <h2>Data for: {{ $date }} ({{ $weekNumber }})</h2>
+        <h2>Data for: {{ $date }}</h2>
 
         @php
-            $groupedByYourwk = $machinesForDate->groupBy('yourwk');
+            $groupedByYourwk = $machinesForDate->groupBy('wk');
         @endphp
 
         @foreach ($groupedByYourwk as $yourwk => $machinesForYourwk)
@@ -113,6 +109,10 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
 
                     <table>
                         <thead>
+                            <tr>
+                                <th colspan="3">Scrapr</th>
+                                <th colspan="25">Production</th>
+                            </tr>
                             <tr>
                                 <th>Machines</th>
                                 <th>Matricule</th>
@@ -142,7 +142,6 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
                                 <th>NB carte kan</th>
                                 <th>NB heures</th>
                                 <th>Date</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
@@ -173,10 +172,9 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
                                 <td>{{ $m->nb_reg4 }}</td>
                                 <td>{{ $m->maint4 }}</td>
                                 <td>{{ $m->pcl4 }}</td>
-                                <td>{{ $m->nb_carte_kan }}</td>
+                                <td>{{ $m->nb_carte_kan}}</td>
                                 <td>{{ $m->nb_heures }}</td>
                                 <td>{{ $m->date }}</td>
-                                <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
                             </tr>
                             @endforeach
                         </tbody>

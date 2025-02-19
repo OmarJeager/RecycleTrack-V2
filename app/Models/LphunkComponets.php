@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MachineEntry extends Model
+class LphunkComponets extends Model
 {
+    //
     protected $fillable = [
         'machine_id',
         'name',
@@ -35,8 +36,10 @@ class MachineEntry extends Model
         'pcl4',
         'nb_carte_kanban',
         'nb_heures',
+        'nb_heures',
         'Group',
         'name_cm',
-        'created_at',
+        'date',
     ];
+    
 }

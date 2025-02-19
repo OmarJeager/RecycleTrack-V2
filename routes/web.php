@@ -1,12 +1,27 @@
 <?php
 
+use App\Http\Controllers\AdminComposeTow;
+use App\Http\Controllers\AdminComposoFourController;
+use App\Http\Controllers\AdminComposoThreeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TorsadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLphunkController;
 use App\Http\Controllers\AdminTorsadoController;
+use App\Http\Controllers\ComposeThreeComponetsController;
+use App\Http\Controllers\ComposeTowComponetsController;
+use App\Http\Controllers\ComposoFourController;
+use App\Http\Controllers\LphunkComponetsController;
 use App\Http\Controllers\MachineEntryController;
+use App\Http\Middleware\Admin;
+use App\Models\ComposeThree;
+use App\Models\ComposoFourComponets;
+use App\Models\MachineEntry;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -61,3 +76,88 @@ Route::post('/torsado/store',[AdminTorsadoController::class,'store'])
 Route::get('/admin/torsado/index',[AdminTorsadoController::class,'index'])
 ->middleware(['auth','admin'])
 ->name('admin.torsado');
+//get machines by  date
+Route::get('/machines-by-date', function (Request $request) {
+    $date = $request->query('date');
+    $machines = MachineEntry::where('date', $date)->get();
+    return view('sertissages.machinebydate', compact('machines', 'date'));
+})->name('machines.by.date');
+//Create New LP Hunk and stor it
+Route::get('/admin/lphunk/create',[AdminLphunkController::class,'create'])
+->middleware(['auth','admin'])
+->name('lphunk.create');
+Route::post('/admin/lphunk/store',[AdminLphunkController::class,'store'])
+->middleware(['auth','admin'])
+->name('lphunk.store');
+//Get all Lp Hunk
+Route::get('/admin/lphunk/index',[AdminLphunkController::class,'index'])
+->middleware(['auth','admin'])
+->name('admin.lphunk');
+// Create new lP Hunk Compoents by User
+Route::get('/lphunkuser/create',[LphunkComponetsController::class,'create'])
+->middleware(['auth'])
+->name('lphunkuser.create');
+Route::post('/lphunkuser/store',[LphunkComponetsController::class,'store'])
+->middleware(['auth'])
+->name('lphunkuser.store');
+//Create new composetwo by admin
+Route::get('/admin/composetwo/create',[AdminComposeTow::class,'create'])
+->middleware(['auth','admin'])
+->name('composetwo.create');
+Route::post('/admin/composetwo/store',[AdminComposeTow::class,'store'])
+->middleware(['auth','admin'])
+->name('composotow.store');
+//show all comosotwo to admin
+Route::get('/admin/composetwo/shwo',[AdminComposeTow::class,'index'])
+->middleware(['auth','admin'])
+->name('composetwo.index');
+//Create new ComposeTwo by User
+Route::get('/composetwo/create',[ComposeTowComponetsController::class,'create'])
+->middleware(['auth'])
+->name('composetwouser.create');
+Route::post('/composetwo/store',[ComposeTowComponetsController::class,'store'])
+->middleware(['auth'])
+->name('composotwouser.store');
+//Create new composo Three
+Route::get('/admin/composothreee/create',[ComposeThree::class,'create'])
+->middleware(['auth','admin'])
+->name('composothree.create');
+// Create new ComposeThree by Admin
+Route::get('/admin/composothree/create',[AdminComposoThreeController::class,'create'])
+->middleware(['auth','admin'])
+->name('composothree.create');
+Route::post('/admin/composothree/store',[AdminComposoThreeController::class,'store'])
+->middleware(['auth','admin'])
+->name('composothree.store');
+// Show all ComposeThree to Admin
+Route::get('/admin/composothree/index',[AdminComposoThreeController::class,'index'])
+->middleware(['auth','admin'])
+->name('composothree.index');
+// Create new composo three by user
+Route::get('user/composothree',[ComposeThreeComponetsController::class,'create'])
+->middleware(['auth'])
+->name('usercomposothree.create');
+Route::post('user/composothree',[ComposeThreeComponetsController::class,'store'])
+->middleware(['auth'])
+->name('usercomposothree.store');
+// Create new ComposoFour by Admin
+Route::get('/admin/composofour/create',[AdminComposoFourController::class,'create'])
+->middleware(['auth','admin'])
+->name('composofour.create');
+Route::post('/admin/composofour/store',[AdminComposoFourController::class,'store'])
+->middleware(['auth','admin'])
+->name('composofour.store');
+// Show all ComposeFour to Admin
+Route::get('/admin/composofour/index',[AdminComposoFourController::class,'index'])
+->middleware(['auth','admin'])
+->name('composofour.index');
+// Create new ComposoFour by User
+Route::get('/composofour/create',[ComposoFourController::class,'create'])
+->middleware(['auth'])
+->name('usercomposofour.create');
+Route::post('/composofour/store',[ComposoFourController::class,'store'])
+->middleware(['auth'])
+->name('usercomposofour.store');
+Route::get('/test-excel', function () {
+    return class_exists(Excel::class) ? 'Excel is working!' : 'Excel is NOT working!';
+});

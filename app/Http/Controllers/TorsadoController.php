@@ -46,7 +46,6 @@ class TorsadoController extends Controller
             'nb_heures' => 'required|array',
             'group' => 'required|string',
             'name_mc' => 'required|string',
-            'wk' => 'required|int',
             'date'=>'required|array',
         ]);
          // Prepare the data to be stored
@@ -87,8 +86,8 @@ class TorsadoController extends Controller
             'nb_heures' => $request->nb_heures[$i],
             'group' => $request->group,
             'name_mc' => $request->name_mc,
-            'wk' => $request->wk,
             'date' => $request->date[$i],
+            'created_at' => now(),
         ];
     }
     //dd($data);

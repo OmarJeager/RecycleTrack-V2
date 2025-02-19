@@ -117,9 +117,9 @@
         <tbody>
             <form action="{{ route('sertissage.store') }}" method="post">
                 @csrf
-                <input type="number" name="wk" id="wk" value="0">
-                <input type="text" name="name_mc" value="ur name">
-                <select name="group" id="group">
+                <input type="text" name="name_mc" placeholder="contre maitre name" required>
+                <select name="group" id="group" required>
+                    <option value="">choice ur group</option>
                     <option value="M">M</option>
                     <option value="S">S</option>
                     <option value="N">N</option>

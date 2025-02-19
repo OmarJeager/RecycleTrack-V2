@@ -1,12 +1,13 @@
 @php
 use Carbon\Carbon;
+$groupedMachines = $machines->groupBy('date'); // Group machines by date
 @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Machine Production Data</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -50,7 +51,7 @@ use Carbon\Carbon;
             background-color: #fff;
         }
         th {
-            background-color: #4CAF50;
+            background-color: #6a4caf;
             color: white;
             text-transform: uppercase;
         }
@@ -77,87 +78,160 @@ use Carbon\Carbon;
     </style>
 </head>
 <body>
-    <h1>Date: {{ Carbon::now() }}</h1>
-    <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
-    <div class="container">
-        @foreach ($machines as $m)
-        <h4>WK : {{$m->wk}}</h4>
-        <h4>ContreMaitre: {{$m->name_mc}}</h4>
-        <h4>Group: {{$m->group}}</h4>
-        @endforeach
+    <div class="controls">
+        <form action="" method="GET">
+            <input type="date" name="selected_date" value="{{ request('selected_date', Carbon::now()->format('Y-m-d')) }}">
+            <button type="submit">Filter</button>
+        </form>
+
+        <form action="" method="GET">
+            <input type="hidden" name="selected_date" value="{{ request('selected_date', Carbon::now()->format('Y-m-d')) }}">
+            <button type="submit">Export</button>
+        </form>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th colspan="3">Scrapr</th>
-                <th colspan="25">Production</th>
-            </tr>
-            <tr>
-                <th>Machines</th>
-                <th>Matricule</th>
-                <th>Echantillon CFA</th>
-                <th>Refus Machine</th>
-                <th>Refus Prototype</th>
-                <th>Refus Mc</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>NB carte kan</th>
-                <th>NB heures</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($machines as $m)
-            <tr>
-                <td>{{ $m->name }}</td>
-                <td>{{ $m->matricule }}</td>
-                <td>{{ $m->echantillon_cfa }}</td>
-                <td>{{ $m->refus_machine }}</td>
-                <td>{{ $m->refus_prototype }}</td>
-                <td>{{ $m->refus_mc }}</td>
-                <td>{{ $m->production }}</td>
-                <td>{{ $m->nb_reg }}</td>
-                <td>{{ $m->maint }}</td>
-                <td>{{ $m->pcl }}</td>
-                <td>{{ $m->refus_mc2 }}</td>
-                <td>{{ $m->production2 }}</td>
-                <td>{{ $m->nb_reg2 }}</td>
-                <td>{{ $m->maint2 }}</td>
-                <td>{{ $m->pcl2 }}</td>
-                <td>{{ $m->refus_mc3 }}</td>
-                <td>{{ $m->production3 }}</td>
-                <td>{{ $m->nb_reg3 }}</td>
-                <td>{{ $m->maint3 }}</td>
-                <td>{{ $m->pcl3 }}</td>
-                <td>{{ $m->refus_mc4 }}</td>
-                <td>{{ $m->production4 }}</td>
-                <td>{{ $m->nb_reg4 }}</td>
-                <td>{{ $m->maint4 }}</td>
-                <td>{{ $m->pcl4 }}</td>
-                <td>{{ $m->nb_carte_kanban }}</td>
-                <td>{{ $m->nb_heures }}</td>
-                <td>{{ $m->date }}</td>
-            </tr>
+    @php
+        $selectedDate = request('selected_date', Carbon::now()->format('Y-m-d'));
+        $filteredMachines = $machines->where('date', $selectedDate);
+    @endphp
+
+    @if ($filteredMachines->isEmpty())
+        <p>No data available for this date.</p>
+    @else
+        @foreach ($filteredMachines->groupBy('group') as $group => $machinesForGroup)
+            <h3>Group: {{ $group }}</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>WK</th>
+                        <th>Machines</th>
+                        <th>Matricule</th>
+                        <th>Production</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($machinesForGroup as $m)
+                    <tr>
+                        <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td>
+                        <td>{{ $m->name }}</td>
+                        <td>{{ $m->matricule }}</td>
+                        <td>{{ $m->production }}</td>
+                        <td>{{ $m->date }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endforeach
+    @endif
+    <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
+    <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
+
+    @foreach ($groupedMachines as $date => $machinesForDate)
+        @php
+            $weekNumber = 'W' . Carbon::parse($date)->format('W'); // Get week number
+        @endphp
+
+        <h2>Data for: {{ $date }} ({{ $weekNumber }})</h2>
+
+        @php
+            $groupedByYourwk = $machinesForDate->groupBy('yourwk');
+        @endphp
+
+        @foreach ($groupedByYourwk as $yourwk => $machinesForYourwk)
+            <h3>WK: {{ $yourwk }}</h3>
+
+            @php
+                $groupedByGroup = $machinesForYourwk->groupBy('group');
+            @endphp
+
+            @foreach ($groupedByGroup as $group => $machinesForGroup)
+                <h4>Group: {{ $group }}</h4>
+
+                @php
+                    $groupedByNameMc = $machinesForGroup->groupBy('name_mc');
+                @endphp
+
+                @foreach ($groupedByNameMc as $name_mc => $machinesForNameMc)
+                    <div class="container">
+                        <h4>ContreMaitre: {{ $name_mc }}</h4>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Machines</th>
+                                <th>Matricule</th>
+                                <th>Echantillon CFA</th>
+                                <th>Refus Machine</th>
+                                <th>Refus Prototype</th>
+                                <th>Refus Mc</th>
+                                <th>Production</th>
+                                <th>NB Reg</th>
+                                <th>Maint</th>
+                                <th>PCL</th>
+                                <th>Refus MC</th>
+                                <th>Production</th>
+                                <th>NB Reg</th>
+                                <th>Maint</th>
+                                <th>PCL</th>
+                                <th>Refus MC</th>
+                                <th>Production</th>
+                                <th>NB Reg</th>
+                                <th>Maint</th>
+                                <th>PCL</th>
+                                <th>Refus MC</th>
+                                <th>Production</th>
+                                <th>NB Reg</th>
+                                <th>Maint</th>
+                                <th>PCL</th>
+                                <th>NB carte kan</th>
+                                <th>NB heures</th>
+                                <th>Date</th>
+                                <th>Week</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($machinesForNameMc as $m)
+                            <tr>
+                                <td>{{ $m->name }}</td>
+                                <td>{{ $m->matricule }}</td>
+                                <td>{{ $m->echantillon_cfa }}</td>
+                                <td>{{ $m->refus_machine }}</td>
+                                <td>{{ $m->refus_prototype }}</td>
+                                <td>{{ $m->refus_mc }}</td>
+                                <td>{{ $m->production }}</td>
+                                <td>{{ $m->nb_reg }}</td>
+                                <td>{{ $m->maint }}</td>
+                                <td>{{ $m->pcl }}</td>
+                                <td>{{ $m->refus_mc2 }}</td>
+                                <td>{{ $m->production2 }}</td>
+                                <td>{{ $m->nb_reg2 }}</td>
+                                <td>{{ $m->maint2 }}</td>
+                                <td>{{ $m->pcl2 }}</td>
+                                <td>{{ $m->refus_mc3 }}</td>
+                                <td>{{ $m->production3 }}</td>
+                                <td>{{ $m->nb_reg3 }}</td>
+                                <td>{{ $m->maint3 }}</td>
+                                <td>{{ $m->pcl3 }}</td>
+                                <td>{{ $m->refus_mc4 }}</td>
+                                <td>{{ $m->production4 }}</td>
+                                <td>{{ $m->nb_reg4 }}</td>
+                                <td>{{ $m->maint4 }}</td>
+                                <td>{{ $m->pcl4 }}</td>
+                                <td>{{ $m->nb_carte_kan }}</td>
+                                <td>{{ $m->nb_heures }}</td>
+                                <td>{{ $m->date }}</td>
+                                <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
             @endforeach
-        </tbody>
-    </table>
+        @endforeach
+    @endforeach
 </body>
 </html>

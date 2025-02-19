@@ -43,7 +43,6 @@ return new class extends Migration
                 $table->integer('nb_heures')->default(0);
                 $table->string('group')->default('unknown');
                 $table->string('name_mc')->default('unknown');
-                $table->integer('wk')->default(0);
                 $table->date('date')->default(now());
                 $table->timestamps();
         });

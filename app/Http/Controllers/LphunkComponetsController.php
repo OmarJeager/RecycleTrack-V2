@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MachineEntry;
-use App\Models\Sertissage;
-use Hamcrest\Core\Set;
+use App\Models\Lphunk;
+use App\Models\LphunkComponets;
 use Illuminate\Http\Request;
 
-class MachineEntryController extends Controller
+class LphunkComponetsController extends Controller
 {
+    //
     public function create(){
-        $machines=Sertissage::all();
-        return view('sertissages.create',compact('machines'));
+        $machines=Lphunk::all();
+        return view('lphunk.create',compact('machines'));
     }
     public function store(Request $request){
         //dd($request->all());
@@ -47,6 +47,7 @@ class MachineEntryController extends Controller
             'group' => 'required|string',
             'name_mc' => 'required|string',
             'date'=>'required|array',
+
         ]);
          // Prepare the data to be stored
     $data = [];
@@ -92,8 +93,8 @@ class MachineEntryController extends Controller
     //dd($data);
 
     // Store the data in the database
-    MachineEntry::insert($data);
+    LphunkComponets::insert($data);
 
-    return redirect()->route('sertissage.create')->with('success', 'Machines details stored successfully.');
+    return redirect()->route('lphunkuser.create')->with('success', 'Machines details stored successfully.');
     }
 }
