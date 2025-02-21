@@ -8,11 +8,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TorsadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminCoupeOneController;
 use App\Http\Controllers\AdminLphunkController;
 use App\Http\Controllers\AdminTorsadoController;
 use App\Http\Controllers\ComposeThreeComponetsController;
 use App\Http\Controllers\ComposeTowComponetsController;
 use App\Http\Controllers\ComposoFourController;
+use App\Http\Controllers\CoupeOneController;
 use App\Http\Controllers\LphunkComponetsController;
 use App\Http\Controllers\MachineEntryController;
 use App\Http\Middleware\Admin;
@@ -161,3 +163,43 @@ Route::post('/composofour/store',[ComposoFourController::class,'store'])
 Route::get('/test-excel', function () {
     return class_exists(Excel::class) ? 'Excel is working!' : 'Excel is NOT working!';
 });
+// Crerate new CoupeOne Machines by Admin
+Route::get('/admin/coupeone/create',[AdminCoupeOneController::class,'create'])
+->middleware(['auth','admin'])
+->name('coupeone.create');
+Route::post('/admin/coupeone/store',[AdminCoupeOneController::class,'store'])
+->middleware(['auth','admin'])
+->name('coupeone.store');
+// show data coupe one to admin
+Route::get('/admin/coupeone/index',[AdminCoupeOneController::class,'index'])
+->middleware(['auth','admin'])
+->name('coupeone.index');
+// Create new coupe one by user
+Route::get('usercoupeone/create',[CoupeOneController::class,'create'])
+->middleware(['auth'])
+->name('usercoupeone.create');
+Route::post('usercoupeone/store',[CoupeOneController::class,'store'])
+->middleware(['auth'])
+->name('usercoupeone.store');
+//Show Archive All Data To Admin
+Route::get('/admin/archive',[AdminController::class,'archive'])
+->middleware(['auth','admin'])
+->name('admin.archive');
+Route::get('/archive/torsado',[AdminTorsadoController::class,'archive'])
+->middleware(['auth','admin'])
+->name('torsado.archive');
+Route::get('/archive/lphunk',[AdminLphunkController::class,'archive'])
+->middleware(['auth','admin'])
+->name('lphunk.archive');
+Route::get('/archive/coupone',[AdminCoupeOneController::class,'archive'])
+->middleware(['auth','admin'])
+->name('coupeone.archive');
+Route::get('/composotwo/archive',[AdminComposeTow::class,'archive'])
+->middleware(['auth','admin'])
+->name('composotwo.archive');
+Route::get('composothree/archive',[AdminComposoThreeController::class,'archive'])
+->middleware(['auth','admin'])
+->name('composothree.archive');
+Route::get('composofour/archive',[AdminComposoFourController::class,'archive'])
+->middleware(['auth','admin'])
+->name('composofour.archive');

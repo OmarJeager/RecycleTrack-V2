@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ComposeThree;
-use App\Models\ComposeThreeComponets;
+use App\Models\CoupeOne;
+use App\Models\CoupeOneComponets;
 use Illuminate\Http\Request;
 
-class ComposeThreeComponetsController extends Controller
+class CoupeOneController extends Controller
 {
     //
     public function create(){
-        $machines=ComposeThree::all();
-        return view('composothree.create',compact('machines'));
+        $machines=CoupeOne::all();
+        return view('coupeone.create',compact('machines'));
     }
     public function store(Request $request){
         //dd($request->all());
@@ -41,7 +41,7 @@ class ComposeThreeComponetsController extends Controller
             'namecm'=>'required|string',
             'fill'=>'required|array',
             'scrappic'=>'required|array',
-            'terminal|array',
+            'terminal'=>'required|array',
         ]);
          // Prepare the data to be stored
     $data = [];
@@ -82,8 +82,8 @@ class ComposeThreeComponetsController extends Controller
     //dd($data);
 
     // Store the data in the database
-    ComposeThreeComponets::insert($data);
+    CoupeOneComponets::insert($data);
 
-    return redirect()->route('usercomposothree.create')->with('success', 'Machines details stored successfully.');
+    return redirect()->route('usercoupeone.create')->with('success', 'Machines details stored successfully.');
     }
 }

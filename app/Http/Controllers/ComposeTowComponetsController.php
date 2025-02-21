@@ -39,9 +39,9 @@ class ComposeTowComponetsController extends Controller
             'totalscrapemachine'=>'required|array',
             'group'=>'required|string',
             'namecm'=>'required|string',
-            'fill'=>'required',
-            'scrappic'=>'required',
-            'terminal',
+            'fill'=>'required|array',
+            'scrappic'=>'required|array',
+            'terminal|array',
         ]);
          // Prepare the data to be stored
     $data = [];
@@ -73,9 +73,9 @@ class ComposeTowComponetsController extends Controller
             'totalscrapemachine'=> $request->totalscrapemachine[$i],
             'group'=>$request->group,
             'namecm'=>$request->namecm,
-            'fill'=>$request->fill,
-            'scrappic'=>$request->scrappic,
-            'terminal'=>$request->terminal,
+            'fill'=>$request->fill[$i],
+            'scrappic'=>$request->scrappic[$i],
+            'terminal'=>$request->terminal[$i],
             'created_at' => now(),
         ];
     }

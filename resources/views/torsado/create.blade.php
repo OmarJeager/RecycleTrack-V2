@@ -74,10 +74,70 @@
                 opacity: 1;
             }
         }
+        .container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: orangered;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
     </style>
 </head>
 <body>
+    <div style="text-align: center;">
+        <div class="container">
+            <img src="{{ asset('logo.png') }}"  alt="Avatar" class="image">
+            <div class="overlay">
+              <h1 class="text">ALWAYS DO THE RIGHT THINGS,THE RIGHT WAY</h1>
+            </div>
+          </div>
+    </div>
+    <h1 style="text-align: center; margin-top: 0;">Welcome To Contre Maitre Interface</h1>
+    <h1>Twist Area</h1>
+    <h2>Fill the form below to create a new Torsado:</h2>    
+    @php
+    $currentTime = now()->format('H:i'); // Get current time in HH:MM format
 
+    if ($currentTime >= '06:00' && $currentTime <= '14:00') {
+        $group = 'M'; // Morning Shift
+    } elseif ($currentTime >= '14:01' && $currentTime <= '22:00') {
+        $group = 'S'; // Second Shift
+    } else {
+        $group = 'N'; // Night Shift
+    }
+@endphp
     @if (session('success'))
         <div class="alert alert-success" style="color: green;">
             {{ session('success') }}
@@ -117,13 +177,8 @@
         <tbody>
             <form action="{{ route('userto.storedata') }}" method="post">
                 @csrf
-                <input type="text" name="name_mc" placeholder="contre maitre name" required>
-                <select name="group" id="group" required>
-                    <option value="">Choice ur Group</option>
-                    <option value="M">M</option>
-                    <option value="S">S</option>
-                    <option value="N">N</option>
-                </select>
+                <input type="hidden" name="name_mc" value="{{Auth::user()->name}}" required>
+                <input type="hidden" name="group" value="{{ $group }}">
                 @foreach ($machines as $m )
                 <input type="hidden" name="name[]" value="{{$m->machines}}">
                 <td><input type="hidden" name="machine_id[]" value="{{ $m->id }}"></td>

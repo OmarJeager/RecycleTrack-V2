@@ -1,13 +1,12 @@
 @php
 use Carbon\Carbon;
-$groupedMachines = $machines->groupBy('date'); // Group machines by date
 @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Machine Production Data</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,6 +25,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
             border: none;
             border-radius: 5px;
             font-size: 16px;
+            cursor: pointer;
         }
         button a {
             color: white;
@@ -42,7 +42,6 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            animation: fadeIn 1.5s ease-in;
         }
         th, td {
             padding: 10px;
@@ -51,7 +50,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
             background-color: #fff;
         }
         th {
-            background-color: #4CAF50;
+            background-color: #6a4caf;
             color: white;
             text-transform: uppercase;
         }
@@ -62,41 +61,59 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
             background-color: #ddd;
             cursor: pointer;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .filter-container {
+            margin-bottom: 20px;
         }
-        @media (max-width: 768px) {
-            table, th, td {
-                font-size: 12px;
-            }
+        .filter-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .error-message {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Date: {{ Carbon::now() }}</h1>
+    <h1>Machine Production Data</h1>
+    
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 
-    @foreach ($groupedMachines as $date => $machinesForDate)
-        <h2>Data for: {{ $date }}</h2>
+    <!-- Date Filter Form -->
+    <div class="filter-container">
+        <form method="GET" action="">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" value="{{ request('date') }}">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
 
-        @php
-            $groupedByYourwk = $machinesForDate->groupBy('wk');
-        @endphp
+    @php
+        $selectedDate = request('date'); // Get selected date
+        $filteredMachines = collect(); // Default empty collection
 
-        @foreach ($groupedByYourwk as $yourwk => $machinesForYourwk)
-            <h3>WK: {{ $yourwk }}</h3>
+        if ($selectedDate) {
+            $filteredMachines = $machines->where('date', $selectedDate); // Filter by date
+        }
+    @endphp
 
+    @if ($selectedDate)
+        @if ($filteredMachines->isEmpty())
+            <p class="error-message">No data found for this day: {{ $selectedDate }}</p>
+        @else
             @php
-                $groupedByGroup = $machinesForYourwk->groupBy('group');
+                $weekNumber = 'W' . Carbon::parse($selectedDate)->format('W');
+                $groupedByGroup = $filteredMachines->groupBy('group');
             @endphp
 
+            <h2>Data for: {{ $selectedDate }} ({{ $weekNumber }})</h2>
+
             @foreach ($groupedByGroup as $group => $machinesForGroup)
-                <h4>Group: {{ $group }}</h4>
+                <h3>Group: {{ $group }}</h3>
 
                 @php
                     $groupedByNameMc = $machinesForGroup->groupBy('name_mc');
@@ -109,10 +126,6 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
 
                     <table>
                         <thead>
-                            <tr>
-                                <th colspan="3">Scrapr</th>
-                                <th colspan="25">Production</th>
-                            </tr>
                             <tr>
                                 <th>Machines</th>
                                 <th>Matricule</th>
@@ -142,6 +155,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
                                 <th>NB carte kan</th>
                                 <th>NB heures</th>
                                 <th>Date</th>
+                                <th>Week Number</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -172,16 +186,17 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
                                 <td>{{ $m->nb_reg4 }}</td>
                                 <td>{{ $m->maint4 }}</td>
                                 <td>{{ $m->pcl4 }}</td>
-                                <td>{{ $m->nb_carte_kan}}</td>
+                                <td>{{ $m->nb_carte_kan }}</td>
                                 <td>{{ $m->nb_heures }}</td>
                                 <td>{{ $m->date }}</td>
+                                <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 @endforeach
             @endforeach
-        @endforeach
-    @endforeach
+        @endif
+    @endif
 </body>
 </html>

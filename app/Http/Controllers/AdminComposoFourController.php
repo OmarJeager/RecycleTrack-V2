@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class AdminComposoFourController extends Controller
 {
     //
+    public function archive()
+    {
+        $machines = ComposoFourComponets::all();
+        return view('admin.composofour.archive', compact('machines'));
+    }
     public function index()
     {
         $machines = ComposoFourComponets::all();

@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 class AdminLphunkController extends Controller
 {
     //
+    public function archive()
+    {
+       // $machines = ToursadoComponets::all();
+        $machines = LphunkComponets::all();
+        return view('admin.Lphunk.archive', compact('machines','machines'));
+    }
     public function index()
     {
        // $machines = ToursadoComponets::all();

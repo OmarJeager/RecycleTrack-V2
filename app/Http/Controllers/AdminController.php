@@ -7,6 +7,12 @@ use App\Models\Sertissage;
 use App\Models\MachineEntry;
 class AdminController extends Controller
 {
+    public function archive()
+    {
+        $machines = MachineEntry::all();
+        $sertissages = Sertissage::all();
+        return view('admin.sertissage.archive', compact('machines','sertissages'));
+    }
     public function index()
     {
         $machines = MachineEntry::all();

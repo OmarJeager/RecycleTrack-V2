@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class AdminComposoThreeController extends Controller
 {
     //
+    public function archive()
+    {
+        $machines = ComposeThreeComponets::all();
+        return view('admin.composethree.archive', compact('machines'));
+    }
     public function index()
     {
         $machines = ComposeThreeComponets::all();

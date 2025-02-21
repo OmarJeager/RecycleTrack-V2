@@ -1,8 +1,14 @@
 @php
 use Carbon\Carbon;
 
+// Get the selected date from the request, default to today if not set
+$selectedDate = request('date', Carbon::now()->format('Y-m-d'));
+
+// Filter machines by the selected date
+$filteredMachines = $machines->where('date', $selectedDate);
+
 // Group machines by date and sort in descending order
-$groupedMachines = $machines->groupBy('date')->sortKeysDesc();
+$groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -61,90 +67,112 @@ $groupedMachines = $machines->groupBy('date')->sortKeysDesc();
         tr:hover {
             background-color: #ddd;
         }
+        .error-message {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 
-    @foreach ($groupedMachines as $date => $machinesForDate)
-        <h2>Data for: {{ $date }}</h2>
+    <form method="GET" action="{{ url()->current() }}">
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" value="{{ $selectedDate }}">
+        <button type="submit">Filter</button>
+    </form>
 
-        @php
-            $groupedByGroup = $machinesForDate->groupBy('group');
-        @endphp
+    @if ($filteredMachines->isEmpty())
+        <p class="error-message">No data found for this day: {{ $selectedDate }}</p>
+    @else
+        @foreach ($groupedMachines as $date => $machinesForDate)
+            <h2>Data for: {{ $date }}</h2>
 
-        @foreach ($groupedByGroup as $group => $groupMachines)
-            <div class="container">
-                <h3>Group: {{ $group }}</h3>
-                <h4>ContreMaitre: {{ $groupMachines->first()->namecm }}</h4>
-            </div>
+            @php
+                $groupedByGroup = $machinesForDate->groupBy('group');
+            @endphp
 
-            <table>
-                <thead>
-                    <tr>
-                        <th colspan="3">Scrapr</th>
-                        <th colspan="20">Production</th>
-                    </tr>
-                    <tr>
-                        <th>Machines</th>
-                        <th>Matricule</th>
-                        <th>Obj/NB Reg</th>
-                        <th>NB Reg</th>
-                        <th>Production</th>
-                        <th>DPN De Bobine</th>
-                        <th>MP</th>
-                        <th>Temps Mort</th>
-                        <th>MCE</th>
-                        <th>Reglage</th>
-                        <th>Process</th>
-                        <th>NB Defaut</th>
-                        <th>NB Heures</th>
-                        <th>Metal</th>
-                        <th>Echantillion CFA</th>
-                        <th>Echantillion Reglage</th>
-                        <th>Refus Machine</th>
-                        <th>Refus Quantite</th>
-                        <th>Refus Prototype</th>
-                        <th>Total Scrap Machine</th>
-                        <th>Date</th>
-                        <th>WK</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($groupMachines as $m)
-                    <tr>
-                        <td>{{ $m->name }}</td>
-                        <td>{{ $m->matricule }}</td>
-                        <td>{{ $m->objnbreg }}</td>
-                        <td>{{ $m->nbreg }}</td>
-                        <td>{{ $m->production }}</td>
-                        <td>{{ $m->dpndebobine }}</td>
-                        <td>{{ $m->mp }}</td>
-                        <td>{{ $m->tempsmort }}</td>
-                        <td>{{ $m->mce }}</td>
-                        <td>{{ $m->reglage }}</td>
-                        <td>{{ $m->process }}</td>
-                        <td>{{ $m->nbdeafaut }}</td>
-                        <td>{{ $m->nbheures }}</td>
-                        <td>{{ $m->metal }}</td>
-                        <td>{{ $m->echantilliondecfa }}</td>
-                        <td>{{ $m->echantilliondereglage }}</td>
-                        <td>{{ $m->refusmachine }}</td>
-                        <td>{{ $m->refusqualite }}</td>
-                        <td>{{ $m->refusprototype }}</td>
-                        <td>{{ $m->totalscrapemachine }}</td>
-                        <td>{{ $m->date }}</td>
-                        <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
-                    </tr>
+            @foreach ($groupedByGroup as $group => $groupMachines)
+                <div class="container">
+                    <h3>Group: {{ $group }}</h3>
+                    
+                    @php
+                        $groupedByNameCm = $groupMachines->groupBy('namecm');
+                    @endphp
+
+                    @foreach ($groupedByNameCm as $namecm => $nameCmMachines)
+                        <h4>ContreMaitre: {{ $namecm }}</h4>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Scrapr</th>
+                                    <th colspan="20">Production</th>
+                                </tr>
+                                <tr>
+                                    <th>Machines</th>
+                                    <th>Matricule</th>
+                                    <th>Obj/NB Reg</th>
+                                    <th>NB Reg</th>
+                                    <th>Production</th>
+                                    <th>DPN De Bobine</th>
+                                    <th>MP</th>
+                                    <th>Temps Mort</th>
+                                    <th>MCE</th>
+                                    <th>Reglage</th>
+                                    <th>Process</th>
+                                    <th>NB Defaut</th>
+                                    <th>NB Heures</th>
+                                    <th>Metal</th>
+                                    <th>Echantillion CFA</th>
+                                    <th>Echantillion Reglage</th>
+                                    <th>Refus Machine</th>
+                                    <th>Refus Quantite</th>
+                                    <th>Refus Prototype</th>
+                                    <th>Total Scrap Machine</th>
+                                    <th>Date</th>
+                                    <th>WK</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($nameCmMachines as $m)
+                                <tr>
+                                    <td>{{ $m->name }}</td>
+                                    <td>{{ $m->matricule }}</td>
+                                    <td>{{ $m->objnbreg }}</td>
+                                    <td>{{ $m->nbreg }}</td>
+                                    <td>{{ $m->production }}</td>
+                                    <td>{{ $m->dpndebobine }}</td>
+                                    <td>{{ $m->mp }}</td>
+                                    <td>{{ $m->tempsmort }}</td>
+                                    <td>{{ $m->mce }}</td>
+                                    <td>{{ $m->reglage }}</td>
+                                    <td>{{ $m->process }}</td>
+                                    <td>{{ $m->nbdeafaut }}</td>
+                                    <td>{{ $m->nbheures }}</td>
+                                    <td>{{ $m->metal }}</td>
+                                    <td>{{ $m->echantilliondecfa }}</td>
+                                    <td>{{ $m->echantilliondereglage }}</td>
+                                    <td>{{ $m->refusmachine }}</td>
+                                    <td>{{ $m->refusqualite }}</td>
+                                    <td>{{ $m->refusprototype }}</td>
+                                    <td>{{ $m->totalscrapemachine }}</td>
+                                    <td>{{ $m->date }}</td>
+                                    <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <h4>Fill: {{ $nameCmMachines->first()->fill }}</h4>
+                        <h4>Scrap Photo: {{ $nameCmMachines->first()->scrappic }}</h4>
+                        <h4>Terminal: {{ $nameCmMachines->first()->terminal }}</h4>
                     @endforeach
-                </tbody>
-            </table>
-
-            <h4>Fill: {{ $groupMachines->first()->fill }}</h4>
-            <h4>Scrap Photo: {{ $groupMachines->first()->scrappic }}</h4>
-            <h4>Terminal: {{ $groupMachines->first()->terminal }}</h4>
+                </div>
+            @endforeach
         @endforeach
-    @endforeach
+    @endif
 </body>
 </html>

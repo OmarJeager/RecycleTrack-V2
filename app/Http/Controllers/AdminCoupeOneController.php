@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ComposeTow;
-use App\Models\ComposeTowComponets;
+use App\Models\CoupeOne;
+use App\Models\CoupeOneComponets;
 use Illuminate\Http\Request;
 
-class AdminComposeTow extends Controller
+class AdminCoupeOneController extends Controller
 {
     //
     public function archive()
     {
-        $machines = ComposeTowComponets::all();
-        return view('admin.composetwo.archive', compact('machines'));
+        $machines = CoupeOneComponets::all();
+        return view('admin.coupeone.archive', compact('machines'));
     }
     public function index()
     {
-        $machines = ComposeTowComponets::all();
-        return view('admin.composetwo.index', compact('machines'));
+        $machines = CoupeOneComponets::all();
+        return view('admin.coupeone.index', compact('machines'));
     }
     public function create()
     {
-        return view('admin.composetwo.create');
+        return view('admin.coupeone.create');
     }
     public function store(Request $request)
     {
@@ -29,7 +29,7 @@ class AdminComposeTow extends Controller
         $request->validate([
             'machines'=> 'required',
         ]);
-        ComposeTow::create([
+        CoupeOne::create([
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');

@@ -22,7 +22,7 @@
             border: 1px solid #ddd;
         }
         th {
-            background-color: #007BFF;
+            background-color: #ff2f00;
             color: white;
         }
         input[type="number"], input[type="text"], select {
@@ -34,7 +34,7 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #28a745;
+            background-color: orangered;
             color: white;
             border: none;
             border-radius: 5px;
@@ -42,7 +42,7 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #4a2188;
         }
         .alert {
             padding: 15px;
@@ -77,7 +77,20 @@
     </style>
 </head>
 <body>
+    <img src="{{ asset('logo.png') }}"  alt="Avatar" class="image">
+    <h1>Welcome LP Hunk Area</h1>
+    <h2>Fill the form below to create a new LP Hunk:</h2>
+    @php
+    $currentTime = now()->format('H:i'); // Get current time in HH:MM format
 
+    if ($currentTime >= '06:00' && $currentTime <= '14:00') {
+        $group = 'M'; // Morning Shift
+    } elseif ($currentTime >= '14:01' && $currentTime <= '22:00') {
+        $group = 'S'; // Second Shift
+    } else {
+        $group = 'N'; // Night Shift
+    }
+@endphp
     @if (session('success'))
         <div class="alert alert-success" style="color: green;">
             {{ session('success') }}
@@ -117,13 +130,8 @@
         <tbody>
             <form action="{{ route('lphunkuser.store') }}" method="post">
                 @csrf
-                <input type="text" name="name_mc" placeholder="contre maitre name" required>
-                <select name="group" id="group" required>
-                    <option value="">Choice ur group</option>
-                    <option value="M">M</option>
-                    <option value="S">S</option>
-                    <option value="N">N</option>
-                </select>
+                <input type="hidden" name="name_mc" value="{{Auth::user()->name}}" required>
+                <input type="hidden" name="group" value="{{ $group }}">
                 @foreach ($machines as $m )
                 <input type="hidden" name="name[]" value="{{$m->machines}}">
                 <td><input type="hidden" name="machine_id[]" value="{{ $m->id }}"></td>

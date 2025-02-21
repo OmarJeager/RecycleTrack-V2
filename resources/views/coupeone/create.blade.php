@@ -202,7 +202,7 @@
         <img src="{{ asset('aptiv.png') }}" alt="Aptiv Image" class="second">
     </div>
     <h1 style="text-align: center; margin-top: 0;">Welcome To Contre Maitre Interface</h1>
-    <h1>Cutting Area G3</h1>
+    <h1>Cutting Area G1</h1>
     <h3>Fill in the form below to record the daily production of the Cutting Area:</h3>
     @php
     use Carbon\Carbon;
@@ -251,7 +251,7 @@
             <th>terminal</th>
         </thead>
         <tbody>
-            <form action="{{ route('usercomposothree.store') }}" method="post">
+            <form action="{{ route('usercoupeone.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="namecm" value="{{Auth::user()->name}}">
                 <input type="hidden" name="group" value="{{ $group }}">

@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class AdminTorsadoController extends Controller
 {
+    public function archive()
+    {
+        $machines = ToursadoComponets::all();
+        $sertissages = Toursado::all();
+        return view('admin.torsado.archive', compact('machines','sertissages'));
+    }
     public function index()
     {
         $machines = ToursadoComponets::all();
