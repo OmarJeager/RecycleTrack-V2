@@ -10,7 +10,7 @@
                 {{ session('success') }}
             </div>
         @endif
-
+        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" class="absolute top-10 right-0 mt-2 mr-2 w-300 h-300 transition transform hover:scale-105">
         <!-- Logo -->
         <div class="flex justify-start">
             <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="first">
