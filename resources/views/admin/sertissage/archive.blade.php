@@ -1,5 +1,7 @@
 @php
-$groupedMachines = $machines->groupBy('date'); // Group machines by date
+$groupedMachines = $machines->groupBy('date')->sortByDesc(function ($machines, $date) {
+    return \Carbon\Carbon::parse($date);
+}); // Group machines by date and sort by date descending
 @endphp
 @php
     use Carbon\Carbon;

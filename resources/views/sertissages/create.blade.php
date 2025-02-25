@@ -53,39 +53,6 @@
             border-radius: 5px;
         }
 
-        /* Animation for table rows */
-        tr {
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        tr:nth-child(even) {
-            animation-delay: 0.2s;
-        }
-
-        tr:nth-child(odd) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Custom styles for machine rows */
-        .machine-row {
-            background-color: #e0e0e0; /* Set machine rows to gray */
-            transition: background-color 0.3s ease;
-        }
-
-        .machine-row:hover {
-            background-color: #ffa500; /* Set hover color to orange */
-        }
-
         /* Container to hold both images */
         .logo-container {
             position: relative;
@@ -126,13 +93,40 @@
             }
         }
 
-        /* Highlight row on click */
-        .highlight {
-            background-color:orangered !important;
+        /* Sticky column */
+        .sticky-col {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            background-color: #f4f7f6;
+            z-index: 1;
+        }
+
+        .sticky-col th {
+            background-color: #007BFF;
+        }
+        .btn-large {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-large:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
+    <div style="position: absolute; top: 10px; right: 10px;">
+        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="width: 250px; height: 250px;" class="mt-2 mb-2 transition transform hover:scale-105">
+    </div>
     <div class="logo-container">
         <!-- First image (default) -->
         <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="first">
@@ -164,7 +158,15 @@
 
     <table border="1">
         <thead>
-            <th>Machines</th>
+            <th class="sticky-col">Machines</th>
+            <th colspan="4">scrap</th>
+            <th colspan="5">2H</th>
+            <th colspan="5">4H</th>
+            <th colspan="5">6H</th>
+            <th colspan="7">8H</th>
+        </thead>
+        <thead>
+            <th class="sticky-col">Machines</th>
             <th>Matricule</th>
             <th>Echantillon CFA</th>
             <th>Refus Machine</th>
@@ -190,55 +192,51 @@
             <th>Maint</th>
             <th>PCL</th>
             <th>NB Carte Kan</th>
-            <th>NB Heures</th>        </thead>
+            <th>NB Heures</th>
+        </thead>
         <tbody>
             <form action="{{ route('sertissage.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="name_mc" value="{{Auth::user()->name}}" required>
                 @foreach ($machines as $m )
                 <input type="hidden" name="name[]" value="{{$m->machines}}">
-                <td><input type="hidden" name="machine_id[]" value="{{ $m->id }}"></td>
+                <td class="sticky-col"><input type="hidden" name="machine_id[]" value="{{ $m->id }}"></td>
                 <td><input type="hidden" name="date[]" value="{{ \Carbon\Carbon::now()->toDateString() }}"></td>
                 <input type="hidden" name="group" value="{{ $group }}">
                 <tr class="machine-row">
-                    <td>{{ $m->machines }}</td>
-                    <td><input type="number" name="matricule[]" value="0"></td>
-                    <td><input type="number" name="echantillon_cfa[]" value="0"></td>
-                    <td><input type="number" name="refus_machine[]" value="0"></td>
-                    <td><input type="number" name="refus_prototype[]" value="0"></td>
-                    <td><input type="number" name="refus_mc[]" value="0"></td>
-                    <td><input type="number" name="production[]" value="0"></td>
-                    <td><input type="number" name="nb_reg[]" value="0"></td>
-                    <td><input type="number" name="maint[]" value="0"></td>
-                    <td><input type="number" name="pcl[]" value="0"></td>
-                    <td><input type="number" name="refus_mc2[]" value="0"></td>
-                    <td><input type="number" name="production2[]" value="0"></td>
-                    <td><input type="number" name="nb_reg2[]" value="0"></td>
-                    <td><input type="number" name="maint2[]" value="0"></td>
-                    <td><input type="number" name="pcl2[]" value="0"></td>
-                    <td><input type="number" name="refus_mc3[]" value="0"></td>
-                    <td><input type="number" name="production3[]" value="0"></td>
-                    <td><input type="number" name="nb_reg3[]" value="0"></td>
-                    <td><input type="number" name="maint3[]" value="0"></td>
-                    <td><input type="number" name="pcl3[]" value="0"></td>
-                    <td><input type="number" name="refus_mc4[]" value="0"></td>
-                    <td><input type="number" name="production4[]" value="0"></td>
-                    <td><input type="number" name="nb_reg4[]" value="0"></td>
-                    <td><input type="number" name="maint4[]" value="0"></td>
-                    <td><input type="number" name="pcl4[]" value="0"></td>
-                    <td><input type="number" name="nb_carte_kan[]" value="0"></td>
-                    <td><input type="number" name="nb_heures[]" value="0"></td>
+                    <td class="sticky-col">{{ $m->machines }}</td>
+                    <td><input type="number" name="matricule[]" step="any"></td>
+                    <td><input type="number" name="echantillon_cfa[]" step="any"></td>
+                    <td><input type="number" name="refus_machine[]" step="any"></td>
+                    <td><input type="number" name="refus_prototype[]" step="any"></td>
+                    <td><input type="number" name="refus_mc[]" step="any"></td>
+                    <td><input type="number" name="production[]" step="any"></td>
+                    <td><input type="number" name="nb_reg[]" step="any"></td>
+                    <td><input type="number" name="maint[]" step="any"></td>
+                    <td><input type="number" name="pcl[]" step="any"></td>
+                    <td><input type="number" name="refus_mc2[]" step="any"></td>
+                    <td><input type="number" name="production2[]" step="any"></td>
+                    <td><input type="number" name="nb_reg2[]" step="any"></td>
+                    <td><input type="number" name="maint2[]" step="any"></td>
+                    <td><input type="number" name="pcl2[]" step="any"></td>
+                    <td><input type="number" name="refus_mc3[]" step="any"></td>
+                    <td><input type="number" name="production3[]" step="any"></td>
+                    <td><input type="number" name="nb_reg3[]" step="any"></td>
+                    <td><input type="number" name="maint3[]" step="any"></td>
+                    <td><input type="number" name="pcl3[]" step="any"></td>
+                    <td><input type="number" name="refus_mc4[]" step="any"></td>
+                    <td><input type="number" name="production4[]" step="any"></td>
+                    <td><input type="number" name="nb_reg4[]" step="any"></td>
+                    <td><input type="number" name="maint4[]" step="any"></td>
+                    <td><input type="number" name="pcl4[]" step="any"></td>
+                    <td><input type="number" name="nb_carte_kan[]" step="any"></td>
+                    <td><input type="number" name="nb_heures[]" step="any"></td>
                 </tr>
                 @endforeach
                 <button type="submit">Save</button>
             </form>
         </tbody>
     </table>
-    <div class="mt-4">
-        <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">
-            back to dashboard
-        </a>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -251,5 +249,7 @@
             });
         });
     </script>
+    <a href="{{ route('admin.sertissage') }}" class="btn-large">Dispaly Data</a>
+    <a href="{{ route('dashboard') }}" class="btn-large"> back to dashboard</a>
 </body>
 </html>

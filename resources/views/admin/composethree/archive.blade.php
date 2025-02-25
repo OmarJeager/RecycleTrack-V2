@@ -1,8 +1,10 @@
 @php
 use Carbon\Carbon;
 
-// Group machines by date and sort in descending order
-$groupedMachines = $machines->groupBy('date')->sortKeysDesc();
+// Group machines by created_at and sort in descending order
+$groupedMachines = $machines->groupBy(function($item) {
+    return Carbon::parse($item->created_at)->format('Y-m-d');
+})->sortKeysDesc();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -61,15 +63,9 @@ $groupedMachines = $machines->groupBy('date')->sortKeysDesc();
         tr:hover {
             background-color: #ddd;
         }
-        .error-message {
-            color: red;
-            font-size: 18px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
-    <h1>Archive Cutting Area G1</h1>
     <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 
@@ -83,19 +79,19 @@ $groupedMachines = $machines->groupBy('date')->sortKeysDesc();
         @foreach ($groupedByGroup as $group => $groupMachines)
             <div class="container">
                 <h3>Group: {{ $group }}</h3>
-                
+
                 @php
-                    $groupedByNameCm = $groupMachines->groupBy('namecm');
+                    $groupedByNameCm = $groupMachines->groupBy('name_cm');
                 @endphp
 
-                @foreach ($groupedByNameCm as $namecm => $nameCmMachines)
-                    <h4>ContreMaitre: {{ $namecm }}</h4>
+                @foreach ($groupedByNameCm as $name_cm => $nameCmMachines)
+                    <h4>ContreMaitre: {{ $name_cm }}</h4>
 
                     <table>
                         <thead>
                             <tr>
                                 <th colspan="3">Scrapr</th>
-                                <th colspan="20">Production</th>
+                                <th colspan="23">Production</th>
                             </tr>
                             <tr>
                                 <th>Machines</th>
@@ -118,6 +114,9 @@ $groupedMachines = $machines->groupBy('date')->sortKeysDesc();
                                 <th>Refus Quantite</th>
                                 <th>Refus Prototype</th>
                                 <th>Total Scrap Machine</th>
+                                <th>Fill</th>
+                                <th>Scrap Proto</th>
+                                <th>Terminal</th>
                                 <th>Date</th>
                                 <th>WK</th>
                             </tr>
@@ -145,16 +144,15 @@ $groupedMachines = $machines->groupBy('date')->sortKeysDesc();
                                 <td>{{ $m->refusqualite }}</td>
                                 <td>{{ $m->refusprototype }}</td>
                                 <td>{{ $m->totalscrapemachine }}</td>
-                                <td>{{ $m->date }}</td>
-                                <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
+                                <td>{{$m->fill}}</td>
+                                <td>{{$m->scrappic}}</td>
+                                <td>{{$m->terminal}}</td>
+                                <td>{{ $m->created_at }}</td>
+                                <td>{{ 'W' . Carbon::parse($m->created_at)->format('W') }}</td> <!-- Week Number -->
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-
-                    <h4>Fill: {{ $nameCmMachines->first()->fill }}</h4>
-                    <h4>Scrap Photo: {{ $nameCmMachines->first()->scrappic }}</h4>
-                    <h4>Terminal: {{ $nameCmMachines->first()->terminal }}</h4>
                 @endforeach
             </div>
         @endforeach

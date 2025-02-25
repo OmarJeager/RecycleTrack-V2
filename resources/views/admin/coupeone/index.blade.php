@@ -109,7 +109,7 @@ $groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
                             <thead>
                                 <tr>
                                     <th colspan="3">Scrapr</th>
-                                    <th colspan="20">Production</th>
+                                    <th colspan="23">Production</th>
                                 </tr>
                                 <tr>
                                     <th>Machines</th>
@@ -132,6 +132,9 @@ $groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
                                     <th>Refus Quantite</th>
                                     <th>Refus Prototype</th>
                                     <th>Total Scrap Machine</th>
+                                    <th>Fill</th>
+                                    <th>Scrap Proto</th>
+                                    <th>Terminal</th>
                                     <th>Date</th>
                                     <th>WK</th>
                                 </tr>
@@ -159,16 +162,15 @@ $groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
                                     <td>{{ $m->refusqualite }}</td>
                                     <td>{{ $m->refusprototype }}</td>
                                     <td>{{ $m->totalscrapemachine }}</td>
+                                    <td>{{$m->fill}}</td>
+                                    <td>{{$m->scrappic}}</td>
+                                    <td>{{$m->terminal}}</td>
                                     <td>{{ $m->date }}</td>
                                     <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
-                        <h4>Fill: {{ $nameCmMachines->first()->fill }}</h4>
-                        <h4>Scrap Photo: {{ $nameCmMachines->first()->scrappic }}</h4>
-                        <h4>Terminal: {{ $nameCmMachines->first()->terminal }}</h4>
                     @endforeach
                 </div>
             @endforeach

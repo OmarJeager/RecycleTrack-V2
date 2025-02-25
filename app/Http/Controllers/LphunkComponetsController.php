@@ -14,8 +14,8 @@ class LphunkComponetsController extends Controller
         return view('lphunk.create',compact('machines'));
     }
     public function store(Request $request){
-        //dd($request->all());
-        $validated = $request->validate([
+         //dd($request->all());
+          $validated = $request->validate([
             'machine_id' => 'required|array',
             'name' => 'required|array',
             'echantillon_cfa' => 'required|array',
@@ -47,7 +47,6 @@ class LphunkComponetsController extends Controller
             'group' => 'required|string',
             'name_mc' => 'required|string',
             'date'=>'required|array',
-
         ]);
          // Prepare the data to be stored
     $data = [];
@@ -56,40 +55,42 @@ class LphunkComponetsController extends Controller
 
     for ($i = 0; $i < $count; $i++) {
         $data[] = [
-            'machine_id' => $request->machine_id[$i],
-            'name' => $request->name[$i],
-            'echantillon_cfa' => $request->echantillon_cfa[$i],
-            'refus_machine' => $request->refus_machine[$i],
-            'refus_prototype' => $request->refus_prototype[$i],
-            'matricule' => $request->matricule[$i],
-            'refus_mc' => $request->refus_mc[$i],
-            'production' => $request->production[$i],
-            'nb_reg' => $request->nb_reg[$i],
-            'maint' => $request->maint[$i],
-            'pcl' => $request->pcl[$i],
-            'refus_mc2' => $request->refus_mc2[$i],
-            'production2' => $request->production2[$i],
-            'nb_reg2' => $request->nb_reg2[$i],
-            'maint2' => $request->maint2[$i],
-            'pcl2' => $request->pcl2[$i],
-            'refus_mc3' => $request->refus_mc3[$i],
-            'production3' => $request->production3[$i],
-            'nb_reg3' => $request->nb_reg3[$i],
-            'maint3' => $request->maint3[$i],
-            'pcl3' => $request->pcl3[$i],
-            'refus_mc4' => $request->refus_mc4[$i],
-            'production4' => $request->production4[$i],
-            'nb_reg4' => $request->nb_reg4[$i],
-            'maint4' => $request->maint4[$i],
-            'pcl4' => $request->pcl4[$i],
-            'nb_carte_kan' => $request->nb_carte_kan[$i],
-            'nb_heures' => $request->nb_heures[$i],
-            'group' => $request->group,
-            'name_mc' => $request->name_mc,
-            'date' => $request->date[$i],
+            'machine_id' => $request->machine_id[$i] ?? null,
+            'name' => $request->name[$i] ?? null,
+            'echantillon_cfa' => $request->echantillon_cfa[$i] ?? null,
+            'refus_machine' => $request->refus_machine[$i] ?? null,
+            'refus_prototype' => $request->refus_prototype[$i] ?? null,
+            'matricule' => $request->matricule[$i] ?? null,
+            'refus_mc' => $request->refus_mc[$i] ?? null,
+            'production' => $request->production[$i] ?? null,
+            'nb_reg' => $request->nb_reg[$i] ?? null,
+            'maint' => $request->maint[$i] ?? null,
+            'pcl' => $request->pcl[$i] ?? null,
+            'refus_mc2' => $request->refus_mc2[$i] ?? null,
+            'production2' => $request->production2[$i] ?? null,
+            'nb_reg2' => $request->nb_reg2[$i] ?? null,
+            'maint2' => $request->maint2[$i] ?? null,
+            'pcl2' => $request->pcl2[$i] ?? null,
+            'refus_mc3' => $request->refus_mc3[$i] ?? null,
+            'production3' => $request->production3[$i] ?? null,
+            'nb_reg3' => $request->nb_reg3[$i] ?? null,
+            'maint3' => $request->maint3[$i] ?? null,
+            'pcl3' => $request->pcl3[$i] ?? null,
+            'refus_mc4' => $request->refus_mc4[$i] ?? null,
+            'production4' => $request->production4[$i] ?? null,
+            'nb_reg4' => $request->nb_reg4[$i] ?? null,
+            'maint4' => $request->maint4[$i] ?? null,
+            'pcl4' => $request->pcl4[$i] ?? null,
+            'nb_carte_kan' => $request->nb_carte_kan[$i] ?? null,
+            'nb_heures' => $request->nb_heures[$i] ?? null,
+            'group' => $request->group ?? null,
+            'name_mc' => $request->name_mc ?? null,
+            'date' => $request->date[$i] ?? null,
             'created_at' => now(),
         ];
     }
+    
+
     //dd($data);
 
     // Store the data in the database

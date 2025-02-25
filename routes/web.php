@@ -44,7 +44,6 @@ Route::get('/admin/dashboard',[HomeController::class,'index'])
 ->middleware(['auth','admin'])
 ->name('admin.dashboard');
 Route::get('/admin/create',[AdminController::class,'create'])
-
 // Route for showing the form to create a new machine entry
 ->middleware(['auth','admin'])
 ->name('admin.create');
@@ -52,7 +51,7 @@ Route::post('/admin/store',[AdminController::class,'store'])
 ->middleware(['auth','admin'])
 ->name('machines.store');
 Route::get('/admin/sertissage',[AdminController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('admin.sertissage');
 // Route for showing the form to create a sertissages
 Route::get('/sertissage/create',[MachineEntryController::class,'create'])
@@ -76,7 +75,7 @@ Route::post('/torsado/store',[AdminTorsadoController::class,'store'])
 ->middleware(['auth','admin'])
 ->name('torsado.store');
 Route::get('/admin/torsado/index',[AdminTorsadoController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('admin.torsado');
 //get machines by  date
 Route::get('/machines-by-date', function (Request $request) {
@@ -93,7 +92,7 @@ Route::post('/admin/lphunk/store',[AdminLphunkController::class,'store'])
 ->name('lphunk.store');
 //Get all Lp Hunk
 Route::get('/admin/lphunk/index',[AdminLphunkController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('admin.lphunk');
 // Create new lP Hunk Compoents by User
 Route::get('/lphunkuser/create',[LphunkComponetsController::class,'create'])
@@ -111,7 +110,7 @@ Route::post('/admin/composetwo/store',[AdminComposeTow::class,'store'])
 ->name('composotow.store');
 //show all comosotwo to admin
 Route::get('/admin/composetwo/shwo',[AdminComposeTow::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('composetwo.index');
 //Create new ComposeTwo by User
 Route::get('/composetwo/create',[ComposeTowComponetsController::class,'create'])
@@ -133,7 +132,7 @@ Route::post('/admin/composothree/store',[AdminComposoThreeController::class,'sto
 ->name('composothree.store');
 // Show all ComposeThree to Admin
 Route::get('/admin/composothree/index',[AdminComposoThreeController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('composothree.index');
 // Create new composo three by user
 Route::get('user/composothree',[ComposeThreeComponetsController::class,'create'])
@@ -151,7 +150,7 @@ Route::post('/admin/composofour/store',[AdminComposoFourController::class,'store
 ->name('composofour.store');
 // Show all ComposeFour to Admin
 Route::get('/admin/composofour/index',[AdminComposoFourController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('composofour.index');
 // Create new ComposoFour by User
 Route::get('/composofour/create',[ComposoFourController::class,'create'])
@@ -172,7 +171,7 @@ Route::post('/admin/coupeone/store',[AdminCoupeOneController::class,'store'])
 ->name('coupeone.store');
 // show data coupe one to admin
 Route::get('/admin/coupeone/index',[AdminCoupeOneController::class,'index'])
-->middleware(['auth','admin'])
+->middleware(['auth'])
 ->name('coupeone.index');
 // Create new coupe one by user
 Route::get('usercoupeone/create',[CoupeOneController::class,'create'])

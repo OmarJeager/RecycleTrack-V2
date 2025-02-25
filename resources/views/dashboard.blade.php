@@ -6,7 +6,10 @@
     </x-slot>
     <img src="{{ asset('logo2.png') }}" alt="Aptiv Image" class="absolute top-7 right-0 mt-2 mr-2 w-100 h-40 transition transform hover:scale-105">
 
-    <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="mt-2 mb-2 transition transform hover:scale-105">
+    <div class="flex justify-between items-center mt-2 mb-2">
+        <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="transition transform hover:scale-105">
+        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" class="transition transform hover:scale-105">
+    </div>
     <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

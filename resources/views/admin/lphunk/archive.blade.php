@@ -1,5 +1,7 @@
 @php
-$groupedMachines = $machines->groupBy('date'); // Group machines by date
+$groupedMachines = $machines->groupBy('date')->sortByDesc(function ($machines, $date) {
+    return \Carbon\Carbon::parse($date);
+}); // Group machines by date and sort by date descending
 @endphp
 @php
     use Carbon\Carbon;
@@ -58,7 +60,7 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
     </style>
 </head>
 <body>
-    <h1>Archive LP Hunk Area</h1>
+    <h1>Archive Crimping Area </h1>
     <h1>Date: {{ Carbon::now() }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 

@@ -7,13 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 flex flex-col min-h-screen">
-    <img src="{{ asset('Templates-Apps-unscreen.gif') }}" alt="Templates Apps" class="absolute top-0 right-0 mt-2 mr-2 w-200 h-80 transition transform hover:scale-105">
     <img src="{{ asset('logo2.png') }}" alt="Aptiv Image" class="absolute top-0 left-0 mt-2 mr-2 w-100 h-40 transition transform hover:scale-105">
+    
     <!-- Main content area -->
     <div class="flex-grow flex flex-col items-center justify-center">
         <!-- Image with spacing -->
         <img src="{{ asset('aptiv.png') }}" alt="Aptiv Image" class="mt-8 mb-6 transition transform hover:scale-105">
         <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="mt-2 mb-2 transition transform hover:scale-105">
+        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" class="absolute top-0 right-0 mt-2 mr-2 w-100 h-40 transition transform hover:scale-105">
         @if (Route::has('login'))
             <div class="flex justify-center items-center mb-6">
                 <nav class="flex space-x-4">

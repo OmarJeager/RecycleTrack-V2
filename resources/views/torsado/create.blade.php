@@ -113,9 +113,28 @@
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+.btn-large {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-large:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
+    <div style="position: absolute; top: 10px; right: 10px;">
+        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="width: 250px; height: 250px;" class="mt-2 mb-2 transition transform hover:scale-105">
+    </div>
     <div style="text-align: center;">
         <div class="container">
             <img src="{{ asset('logo.png') }}"  alt="Avatar" class="image">
@@ -185,42 +204,39 @@
                 <td><input type="hidden" name="date[]" value="{{ \Carbon\Carbon::now()->toDateString() }}"></td>
                 <tr>
                     <td>{{ $m->machines }}</td>
-                    <td><input type="number" name="matricule[]" value="0"></td>
-                    <td><input type="number" name="echantillon_cfa[]" value="0"></td>
-                    <td><input type="number" name="refus_machine[]" value="0"></td>
-                    <td><input type="number" name="refus_prototype[]" value="0"></td>
-                    <td><input type="number" name="refus_mc[]" value="0"></td>
-                    <td><input type="number" name="production[]" value="0"></td>
-                    <td><input type="number" name="nb_reg[]" value="0"></td>
-                    <td><input type="number" name="maint[]" value="0"></td>
-                    <td><input type="number" name="pcl[]" value="0"></td>
-                    <td><input type="number" name="refus_mc2[]" value="0"></td>
-                    <td><input type="number" name="production2[]" value="0"></td>
-                    <td><input type="number" name="nb_reg2[]" value="0"></td>
-                    <td><input type="number" name="maint2[]" value="0"></td>
-                    <td><input type="number" name="pcl2[]" value="0"></td>
-                    <td><input type="number" name="refus_mc3[]" value="0"></td>
-                    <td><input type="number" name="production3[]" value="0"></td>
-                    <td><input type="number" name="nb_reg3[]" value="0"></td>
-                    <td><input type="number" name="maint3[]" value="0"></td>
-                    <td><input type="number" name="pcl3[]" value="0"></td>
-                    <td><input type="number" name="refus_mc4[]" value="0"></td>
-                    <td><input type="number" name="production4[]" value="0"></td>
-                    <td><input type="number" name="nb_reg4[]" value="0"></td>
-                    <td><input type="number" name="maint4[]" value="0"></td>
-                    <td><input type="number" name="pcl4[]" value="0"></td>
-                    <td><input type="number" name="nb_carte_kan[]" value="0"></td>
-                    <td><input type="number" name="nb_heures[]" value="0"></td>
+                    <td><input type="number" name="matricule[]" step="any"></td>
+                    <td><input type="number" name="echantillon_cfa[]" step="any"></td>
+                    <td><input type="number" name="refus_machine[]" step="any"></td>
+                    <td><input type="number" name="refus_prototype[]" step="any"></td>
+                    <td><input type="number" name="refus_mc[]" step="any"></td>
+                    <td><input type="number" name="production[]" step="any"></td>
+                    <td><input type="number" name="nb_reg[]" step="any"></td>
+                    <td><input type="number" name="maint[]" step="any"></td>
+                    <td><input type="number" name="pcl[]" step="any"></td>
+                    <td><input type="number" name="refus_mc2[]" step="any"></td>
+                    <td><input type="number" name="production2[]" step="any"></td>
+                    <td><input type="number" name="nb_reg2[]" step="any"></td>
+                    <td><input type="number" name="maint2[]" step="any"></td>
+                    <td><input type="number" name="pcl2[]" step="any"></td>
+                    <td><input type="number" name="refus_mc3[]" step="any"></td>
+                    <td><input type="number" name="production3[]" step="any"></td>
+                    <td><input type="number" name="nb_reg3[]" step="any"></td>
+                    <td><input type="number" name="maint3[]" step="any"></td>
+                    <td><input type="number" name="pcl3[]" step="any"></td>
+                    <td><input type="number" name="refus_mc4[]" step="any"></td>
+                    <td><input type="number" name="production4[]" step="any"></td>
+                    <td><input type="number" name="nb_reg4[]" step="any"></td>
+                    <td><input type="number" name="maint4[]" step="any"></td>
+                    <td><input type="number" name="pcl4[]" step="any"></td>
+                    <td><input type="number" name="nb_carte_kan[]" step="any"></td>
+                    <td><input type="number" name="nb_heures[]" step="any"></td>
                 </tr>
                 @endforeach
                 <button type="submit">Save</button>
             </form>
         </tbody>
     </table>
-    <div class="mt-4">
-        <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">
-            back to dashboard
-        </a>
-    </div>
+    <a href="{{ route('admin.torsado') }}" class="btn-large">Dispaly Data</a>
+    <a href="{{ route('dashboard') }}" class="btn-large"> back to dashboard</a>
 </body>
 </html>
