@@ -21,7 +21,8 @@ class AdminComposeTow extends Controller
     }
     public function create()
     {
-        return view('admin.composetwo.create');
+        $machines=ComposeTow::all();
+        return view('admin.composetwo.create', compact('machines'));
     }
     public function store(Request $request)
     {
@@ -33,5 +34,12 @@ class AdminComposeTow extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+    public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = ComposeTow::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }

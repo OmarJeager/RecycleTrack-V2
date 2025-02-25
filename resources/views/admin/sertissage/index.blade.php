@@ -79,7 +79,8 @@ use Carbon\Carbon;
     </style>
 </head>
 <body>
-    <h1>Machine Production Data</h1>
+    <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="position: absolute; top:0; right: 10px; width: auto; height:400px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    <h1>Crimping Area</h1>
     
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 

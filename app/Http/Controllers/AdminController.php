@@ -21,7 +21,8 @@ class AdminController extends Controller
     }
     public function create()
     {
-        return view('admin.sertissage.create');
+        $machines = Sertissage::all();
+        return view('admin.sertissage.create',compact('machines'));
     }
     public function store(Request $request)
     {
@@ -33,5 +34,12 @@ class AdminController extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+    public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = Sertissage::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }

@@ -21,7 +21,8 @@ class AdminComposoFourController extends Controller
     }
     public function create()
     {
-        return view('admin.composofour.create');
+        $machines=ComposoFour::all();
+        return view('admin.composofour.create', compact('machines'));
     }
     public function store(Request $request)
     {
@@ -33,5 +34,12 @@ class AdminComposoFourController extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+    public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = ComposoFour::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }

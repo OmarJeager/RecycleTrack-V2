@@ -4,11 +4,15 @@ use Carbon\Carbon;
 // Get the selected date from the request, default to today if not set
 $selectedDate = request('date', Carbon::now()->format('Y-m-d'));
 
-// Filter machines by the selected date
-$filteredMachines = $machines->where('date', $selectedDate);
+// Filter machines by the selected date using created_at
+$filteredMachines = $machines->filter(function($machine) use ($selectedDate) {
+    return Carbon::parse($machine->created_at)->format('Y-m-d') === $selectedDate;
+});
 
-// Group machines by date and sort in descending order
-$groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
+// Group machines by created_at date and sort in descending order
+$groupedMachines = $filteredMachines->groupBy(function($machine) {
+    return Carbon::parse($machine->created_at)->format('Y-m-d');
+})->sortKeysDesc();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -75,6 +79,8 @@ $groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
     </style>
 </head>
 <body>
+    <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="position: absolute; top:0; right: 10px; width: auto; height:400px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    <h1>Cutting Area G3</h1>
     <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
 
@@ -165,8 +171,8 @@ $groupedMachines = $filteredMachines->groupBy('date')->sortKeysDesc();
                                     <td>{{$m->fill}}</td>
                                     <td>{{$m->scrappic}}</td>
                                     <td>{{$m->terminal}}</td>
-                                    <td>{{ $m->date }}</td>
-                                    <td>{{ 'W' . Carbon::parse($m->date)->format('W') }}</td> <!-- Week Number -->
+                                    <td>{{ $m->created_at }}</td>
+                                    <td>{{ 'W' . Carbon::parse($m->created_at)->format('W') }}</td> <!-- Week Number -->
                                 </tr>
                                 @endforeach
                             </tbody>

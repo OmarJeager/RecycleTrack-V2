@@ -21,7 +21,8 @@ class AdminCoupeOneController extends Controller
     }
     public function create()
     {
-        return view('admin.coupeone.create');
+        $machines=CoupeOne::all();
+        return view('admin.coupeone.create', compact('machines'));
     }
     public function store(Request $request)
     {
@@ -33,5 +34,12 @@ class AdminCoupeOneController extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+    public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = CoupeOne::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }

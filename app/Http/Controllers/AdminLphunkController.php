@@ -23,7 +23,8 @@ class AdminLphunkController extends Controller
     }
     public function create()
     {
-        return view('admin.lphunk.create');
+        $machines=Lphunk::all();
+        return view('admin.lphunk.create', compact('machines'));
     }
     public function store(Request $request)
     {
@@ -35,5 +36,12 @@ class AdminLphunkController extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+    public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = Lphunk::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }

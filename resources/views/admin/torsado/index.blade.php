@@ -78,9 +78,11 @@ $groupedMachines = $machines->groupBy('date'); // Group machines by date
     </style>
 </head>
 <body>
+    <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="position: absolute; top:0; right: 10px; width: auto; height:400px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+
     <h1>Date: {{ Carbon::now()->format('Y-m-d') }}</h1>
     <button><a href="{{ route('admin.dashboard') }}">Back to Dashboard</a></button>
-
+    <h1>Twist Area</h1>
     <!-- Date Filter Input -->
     <label for="dateFilter"><strong>Select Date:</strong></label>
     <input type="date" id="dateFilter">

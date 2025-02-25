@@ -202,3 +202,31 @@ Route::get('composothree/archive',[AdminComposoThreeController::class,'archive']
 Route::get('composofour/archive',[AdminComposoFourController::class,'archive'])
 ->middleware(['auth','admin'])
 ->name('composofour.archive');
+// Destroy Crimping Machine by Admin
+Route::delete('/admin/destroy/{id}',[AdminController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('machines.destroy');
+// Destroy Torsado Machine by Admin
+Route::delete('/admin/torsado/destroy/{id}',[AdminTorsadoController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('torsado.delete');
+//Delete Lphunk Machine by Admin
+Route::delete('/admin/lphunk/destroy/{id}',[AdminLphunkController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('lphunk.delete');
+// Delete Cutting Area G1 by Admin
+Route::delete('/admin/coupeone/destroy/{id}',[AdminCoupeOneController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('coupeone.delete');
+// Delete Cutting Area G2 by Admin
+Route::delete('/admin/coupetwo/destroy/{id}',[AdminComposeTow::class,'destroy'])
+->middleware(['auth','admin'])
+->name('coupetwo.delete');
+// Delete Cutting Area G3 by Admin
+Route::delete('/admin/coupethree/destroy/{id}',[AdminComposoThreeController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('coupethree.delete');
+// Delete Cutting Area G4 by Admin
+Route::delete('/admin/coupefour/destroy/{id}',[AdminComposoFourController::class,'destroy'])
+->middleware(['auth','admin'])
+->name('coupefour.delete');

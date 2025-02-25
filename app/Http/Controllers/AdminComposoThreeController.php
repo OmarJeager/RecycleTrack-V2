@@ -21,7 +21,8 @@ class AdminComposoThreeController extends Controller
     }
     public function create()
     {
-        return view('admin.composethree.create');
+        $machines=ComposeThree::all();
+        return view('admin.composethree.create',compact('machines'));
     }
     public function store(Request $request)
     {
@@ -33,5 +34,12 @@ class AdminComposoThreeController extends Controller
             'machines' => $machine,
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
+    }
+     public function destroy($id)
+    {
+        //dd($id);
+        $sertissage = ComposeThree::find($id);
+        $sertissage->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine deleted successfully');
     }
 }
