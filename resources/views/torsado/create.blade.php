@@ -232,7 +232,7 @@
                     <td><input type="number" name="nb_heures[]" step="any"></td>
                 </tr>
                 @endforeach
-                <button type="submit">Save</button>
+                <button type="submit" class="btn-large">Save</button>
             </form>
         </tbody>
     </table>

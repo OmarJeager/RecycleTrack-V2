@@ -220,15 +220,10 @@
                     <td><input type="number" name="nb_heures[]" step="any"></td>
                 </tr>
                 @endforeach
-                <button type="submit">Save</button>
+                <button type="submit" class="btn-large">Save</button>
             </form>
         </tbody>
     </table>
-    <div class="mt-4">
-        <a href="{{ route('admin.create') }}" class="text-blue-500 hover:underline">
-            back to dashboard
-        </a>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

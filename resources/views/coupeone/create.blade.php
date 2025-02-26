@@ -303,7 +303,7 @@ p {
                         </script>
                     </tr>
                     @endforeach
-                    <button type="submit">Save</button>
+                    <button type="submit" class="btn-large" style="padding: 15px 30px; font-size: 18px;">Save</button>
                 </form>
             </tbody>
         </table>

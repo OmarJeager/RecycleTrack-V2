@@ -14,35 +14,38 @@
         <strong>Warning:</strong> Deleting a machine will remove it from the database permanently, and you will not be able to access its information again.
     </div>
 </div>
-<table style="width: 100%; border-collapse: collapse; margin-top: 30px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <thead style="background-color: #007bff; color: white;">
-        <tr>
-            <th style="padding: 10px; text-align: left;">Machine Name</th>
-            <th style="padding: 10px; text-align: left;">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($machines as $machine)
-            <tr style="background-color: #f9f9f9; transition: background-color 0.3s;">
-                <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ $machine->machines }}</td>
-                <td style="padding: 10px; border-bottom: 1px solid #ccc;">
-                    <form action="{{route('torsado.delete',[$machine->id])}}" method="POST" style="display: inline-block;" onsubmit="return confirmDelete('{{ $machine->machines }}')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s;">Delete</button>
-                    </form>
-                </td>
+<div style="display: flex; justify-content: center;">
+    <table style="width: 50%; border-collapse: collapse; margin-top: 30px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); font-size: 14px; padding: 20px; margin: 20px 0;">
+        <thead style="background-color: #343a40; color: white;">
+            <tr>
+                <th style="padding: 12px; text-align: left;">Machine Name</th>
+                <th style="padding: 12px; text-align: left;">Actions</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($machines as $machine)
+                <tr style="background-color: #f9f9f9; transition: background-color 0.3s;">
+                    <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ $machine->machines }}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+                        <a href="{{ route('torsado.edit', $machine->id) }}" style="background-color: #ffc107; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; margin-right: 10px; transition: background-color 0.3s;">Edit</a>
+                        <form action="{{route('torsado.destroy',[$machine->id])}}" method="POST" style="display: inline-block;" onsubmit="return confirmDelete('{{ $machine->machines }}')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background-color: #dc3545; color: white; padding: 10px 15px; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 <style>
     table tbody tr:hover {
         background-color: #e9ecef;
     }
     a:hover {
-        background-color: #0056b3;
+        background-color: #e0a800;
     }
     button:hover {
         background-color: #c82333;

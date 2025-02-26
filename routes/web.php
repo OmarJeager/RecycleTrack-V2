@@ -209,7 +209,7 @@ Route::delete('/admin/destroy/{id}',[AdminController::class,'destroy'])
 // Destroy Torsado Machine by Admin
 Route::delete('/admin/torsado/destroy/{id}',[AdminTorsadoController::class,'destroy'])
 ->middleware(['auth','admin'])
-->name('torsado.delete');
+->name('torsado.destroy');
 //Delete Lphunk Machine by Admin
 Route::delete('/admin/lphunk/destroy/{id}',[AdminLphunkController::class,'destroy'])
 ->middleware(['auth','admin'])
@@ -230,3 +230,52 @@ Route::delete('/admin/coupethree/destroy/{id}',[AdminComposoThreeController::cla
 Route::delete('/admin/coupefour/destroy/{id}',[AdminComposoFourController::class,'destroy'])
 ->middleware(['auth','admin'])
 ->name('coupefour.delete');
+// Edit Crimping Machine by Admin
+Route::get('/admin/edit/{id}',[AdminController::class,'edit'])
+->middleware(['auth','admin'])
+->name('machines.edit');
+Route::put('/admin/update/{id}',[AdminController::class,'update'])
+->middleware(['auth','admin'])
+->name('sertissage.update');
+// Edit Torsado Machine by Admin
+Route::get('/admin/torsado/edit/{id}',[AdminTorsadoController::class,'edit'])
+->middleware(['auth','admin'])
+->name('torsado.edit');
+Route::put('/admin/torsado/update/{id}',[AdminTorsadoController::class,'update'])
+->middleware(['auth','admin'])
+->name('torsado.update');
+// Edit Lphunk Machine by Admin
+Route::get('/admin/lphunk/edit/{id}',[AdminLphunkController::class,'edit'])
+->middleware(['auth','admin'])
+->name('lphunk.edit');
+Route::put('/admin/lphunk/update/{id}',[AdminLphunkController::class,'update'])
+->middleware(['auth','admin'])
+->name('lphunk.update');
+// Edit Cutting Area G1 by Admin
+Route::get('/admin/coupeone/edit/{id}',[AdminCoupeOneController::class,'edit'])
+->middleware(['auth','admin'])
+->name('coupeone.edit');
+Route::put('/admin/coupeone/update/{id}',[AdminCoupeOneController::class,'update'])
+->middleware(['auth','admin'])
+->name('admin.coupeone.update');
+// Edit Cutting Area G2 by Admin
+Route::get('/admin/coupetwo/edit/{id}',[AdminComposeTow::class,'edit'])
+->middleware(['auth','admin'])
+->name('coupetwo.edit');
+Route::put('/admin/coupetwo/update/{id}',[AdminComposeTow::class,'update'])
+->middleware(['auth','admin'])
+->name('coupetwo.update');
+// Edit Cutting Area G3 by Admin
+Route::get('/admin/coupethree/edit/{id}',[AdminComposoThreeController::class,'edit'])
+->middleware(['auth','admin'])
+->name('coupethree.edit');
+Route::put('/admin/coupethree/update/{id}',[AdminComposoThreeController::class,'update'])
+->middleware(['auth','admin'])
+->name('coupethree.update');
+// Edit Cutting Area G4 by Admin
+Route::get('/admin/coupefour/edit/{id}',[AdminComposoFourController::class,'edit'])
+->middleware(['auth','admin'])
+->name('coupefour.edit');
+Route::put('/admin/coupefour/update/{id}',[AdminComposoFourController::class,'update'])
+->middleware(['auth','admin'])
+->name('coupefour.update');

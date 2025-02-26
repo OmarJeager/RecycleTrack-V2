@@ -36,6 +36,18 @@ class AdminTorsadoController extends Controller
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
     }
+    public function edit($id)
+    {
+        $sertissage = Toursado::find($id);
+        return view('admin.torsado.edit', compact('sertissage'));
+    }
+    public function update(Request $request, $id)
+    {
+        $sertissage = Toursado::find($id);
+        $sertissage->machines = $request->machines;
+        $sertissage->save();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine updated successfully');
+    }
     public function destroy($id)
     {
         //dd($id);

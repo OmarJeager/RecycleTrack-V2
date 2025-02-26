@@ -35,6 +35,18 @@ class AdminController extends Controller
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
     }
+    public function edit($id)
+    {
+        $sertissage = Sertissage::find($id);
+        return view('admin.sertissage.edit', compact('sertissage'));
+    }
+    public function update(Request $request, $id)
+    {
+        $sertissage = Sertissage::find($id);
+        $sertissage->machines = $request->machines;
+        $sertissage->save();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine updated successfully');
+    }
     public function destroy($id)
     {
         //dd($id);

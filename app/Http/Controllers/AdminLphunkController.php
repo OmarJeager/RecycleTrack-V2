@@ -37,6 +37,27 @@ class AdminLphunkController extends Controller
         ]);
         return redirect()->route('admin.dashboard')->with('success', 'Machine created successfully');
     }
+    public function edit($id)
+    {
+        $sertissage = Lphunk::find($id);
+        return view('admin.lphunk.edit', compact('sertissage'));
+    }
+    public function update(Request $request, $id)
+    {
+        //dd($request->all());
+        //dd($id);
+        $request->validate([
+            'machines' => 'required',
+        ]);
+        $sertissage = Lphunk::find($id);
+
+    if (!$sertissage) {
+        return redirect()->route('admin.dashboard')->with('error', 'Machine not found');
+    }
+        $sertissage->machines = $request->machines;
+        $sertissage->save();
+        return redirect()->route('admin.dashboard')->with('success', 'Machine updated successfully');
+    }
     public function destroy($id)
     {
         //dd($id);
