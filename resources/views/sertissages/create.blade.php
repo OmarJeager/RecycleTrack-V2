@@ -41,13 +41,13 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            width: 150px;
+            width: 200px;
             height: auto;
             z-index: 100;
         }
 
         .logo-container img {
-            width: 150px;
+            width: 200px;
             height: auto;
             transition: opacity 0.3s ease-in-out;
         }
@@ -73,11 +73,11 @@
         /* Developeby Logo Styles */
         .developeby-container {
             position: absolute; /* Absolute position to scroll normally */
-            top: 20px; /* Distance from the top */
+            top: 0px; /* Distance from the top */
             right: 20px; /* Distance from the right */
-            width: 250px;
-            height: 250px;
-            z-index: 1000; /* Ensure it stays above other elements */
+            width: 200px;
+            height: 200px;
+            z-index: 100; /* Ensure it stays above other elements */
         }
 
         .developeby-container img {
@@ -91,7 +91,7 @@
         }
 
         .developeby-container:hover::after {
-            content: "Welcome";
+            content: "GitHub: OmarJeager";
             position: absolute;
             top: 50%;
             left: 50%;
@@ -154,7 +154,7 @@
             position: sticky;
             left: 0;
             background-color: #f4f7f6;
-            z-index: 1;
+            z-index: 3; /* Higher z-index to stay above sticky header */
         }
 
         body.dark-mode .sticky-col {
@@ -299,53 +299,53 @@
         </div>
     @endif
 
-    <!-- Table -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th class="sticky-col">Machines</th>
-                <th colspan="4">Scrap</th>
-                <th colspan="5">2H</th>
-                <th colspan="5">4H</th>
-                <th colspan="5">6H</th>
-                <th colspan="7">8H</th>
-            </tr>
-        </thead>
-        <thead>
-            <tr>
-                <th class="sticky-col">Machines</th>
-                <th>Matricule</th>
-                <th>Echantillon CFA</th>
-                <th>Refus Machine</th>
-                <th>Refus Prototype</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>Refus MC</th>
-                <th>Production</th>
-                <th>NB Reg</th>
-                <th>Maint</th>
-                <th>PCL</th>
-                <th>NB Carte Kan</th>
-                <th>NB Heures</th>
-            </tr>
-        </thead>
-        <tbody>
-            <form action="{{ route('sertissage.store') }}" method="post">
-                @csrf
-                <input type="hidden" name="name_mc" value="{{ Auth::user()->name }}" required>
+    <!-- Form -->
+    <form action="{{ route('sertissage.store') }}" method="post">
+        @csrf
+        <input type="hidden" name="name_mc" value="{{ Auth::user()->name }}" required>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th class="sticky-col">Machines</th>
+                    <th colspan="4">Scrap</th>
+                    <th colspan="5">2H</th>
+                    <th colspan="5">4H</th>
+                    <th colspan="5">6H</th>
+                    <th colspan="7">8H</th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    <th class="sticky-col">Machines</th>
+                    <th>Matricule</th>
+                    <th>Echantillon CFA</th>
+                    <th>Refus Machine</th>
+                    <th>Refus Prototype</th>
+                    <th>Refus MC</th>
+                    <th>Production</th>
+                    <th>NB Reg</th>
+                    <th>Maint</th>
+                    <th>PCL</th>
+                    <th>Refus MC</th>
+                    <th>Production</th>
+                    <th>NB Reg</th>
+                    <th>Maint</th>
+                    <th>PCL</th>
+                    <th>Refus MC</th>
+                    <th>Production</th>
+                    <th>NB Reg</th>
+                    <th>Maint</th>
+                    <th>PCL</th>
+                    <th>Refus MC</th>
+                    <th>Production</th>
+                    <th>NB Reg</th>
+                    <th>Maint</th>
+                    <th>PCL</th>
+                    <th>NB Carte Kan</th>
+                    <th>NB Heures</th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach ($machines as $m)
                     <input type="hidden" name="name[]" value="{{ $m->machines }}">
                     <input type="hidden" name="machine_id[]" value="{{ $m->id }}">
@@ -381,10 +381,10 @@
                         <td><input type="number" name="nb_heures[]" step="any"></td>
                     </tr>
                 @endforeach
-                <button type="submit" class="btn-large fixed-save-button">Save</button>
-            </form>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <button type="submit" class="btn-large fixed-save-button">Save</button>
+    </form>
 
     <!-- Buttons -->
     <a href="{{ route('admin.sertissage') }}" class="btn-large">Display Data</a>
