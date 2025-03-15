@@ -45,3 +45,10 @@
         </div>
     </form>
 </x-guest-layout>
+<script>
+    document.getElementById("email").addEventListener("blur",function(){
+    if (this.value && !this.value.includes("@")){
+        this.value+="@gmail.com";
+    }
+})
+</script>
