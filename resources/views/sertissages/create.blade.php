@@ -117,7 +117,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            border: 2px solid blue;
+            border: 2px solid orangered;
         }
 
         th, td {
@@ -127,7 +127,7 @@
         }
 
         th {
-            background-color: #007BFF;
+            background-color: orangered;
             color: white;
         }
 
@@ -140,7 +140,7 @@
             position: sticky;
             top: 0; /* Stick to the top of the viewport */
             z-index: 2;
-            background-color: #007BFF;
+            background-color: orangered;
             color: white;
         }
 
@@ -198,7 +198,7 @@
             display: inline-block;
             padding: 15px 30px;
             font-size: 20px;
-            background-color: #007BFF;
+            background-color: orangered;
             color: white;
             text-align: center;
             text-decoration: none;
@@ -219,7 +219,7 @@
             z-index: 1000; /* Ensure it stays above other elements */
             padding: 15px 30px;
             font-size: 20px;
-            background-color: #007BFF;
+            background-color: orangered;
             color: white;
             text-align: center;
             text-decoration: none;

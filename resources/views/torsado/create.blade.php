@@ -5,18 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contre Maitre Interface</title>
     <style>
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
             color: #333;
             padding: 20px;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative; /* Required for absolute positioning of child elements */
         }
 
-        /* Table Styling */
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f7f6;
+        }
+
+        h1, h3 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 1000;
+        }
+
+        /* Logo Container Styles */
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            height: auto;
+            z-index: 100;
+        }
+
+        .logo-container img {
+            width: 200px;
+            height: auto;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .logo-container img.second {
+            opacity: 0;
+        }
+
+        .logo-container:hover .first {
+            opacity: 0;
+        }
+
+        .logo-container:hover .second {
+            opacity: 1;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Developeby Logo Styles */
+        .developeby-container {
+            position: absolute; /* Absolute position to scroll normally */
+            top: 0px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            width: 200px;
+            height: 200px;
+            z-index: 100; /* Ensure it stays above other elements */
+        }
+
+        .developeby-container img {
+            width: 100%;
+            height: auto;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .developeby-container:hover img {
+            opacity: 0; /* Hide the logo on hover */
+        }
+
+        .developeby-container:hover::after {
+            content: "GitHub: OmarJeager";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: orangered; /* Blue color for light mode */
+            opacity: 1;
+            animation: fadeInText 0.5s ease forwards;
+        }
+
+        body.dark-mode .developeby-container:hover::after {
+            color: #00ff88; /* Light green color for dark mode */
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            border: 2px solid blue;
         }
 
         th, td {
@@ -26,27 +127,42 @@
         }
 
         th {
-            background-color: #007BFF;
+            background-color:orangered;
             color: white;
         }
 
-        /* Sticky Header */
+        body.dark-mode th {
+            background-color: #0056b3; /* Darker blue for dark mode */
+        }
+
+        /* Make thead sticky when scrolling down */
         thead th {
             position: sticky;
-            top: 0;
+            top: 0; /* Stick to the top of the viewport */
             z-index: 2;
-            background-color: #007BFF; /* Match header background */
+            background-color: orangered;
+            color: white;
+        }
+
+        body.dark-mode thead th {
+            background-color: #0056b3; /* Darker blue for dark mode */
         }
 
         /* Sticky First Column */
-        tbody td:first-child {
+        .sticky-col {
+            position: -webkit-sticky;
             position: sticky;
             left: 0;
-            z-index: 1;
-            background-color: white; /* Match table background */
+            background-color: #f4f7f6;
+            z-index: 3; /* Higher z-index to stay above sticky header */
         }
 
-        /* Input Styling */
+        body.dark-mode .sticky-col {
+            background-color: #444; /* Darker background for dark mode */
+            color: #f4f7f6; /* Light text for dark mode */
+        }
+
+        /* Input Styles */
         input[type="number"], input[type="text"], select {
             width: 100px;
             padding: 8px;
@@ -55,7 +171,15 @@
             border: 1px solid #ddd;
         }
 
-        /* Button Styling */
+        body.dark-mode input[type="number"], 
+        body.dark-mode input[type="text"], 
+        body.dark-mode select {
+            background-color: #444;
+            color: #f4f7f6;
+            border-color: #555;
+        }
+
+        /* Button Styles */
         button {
             padding: 10px 20px;
             background-color: #28a745;
@@ -67,84 +191,14 @@
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #883b21;
         }
 
-        /* Alert Styling */
-        .alert {
-            padding: 15px;
-            background-color: #4CAF50;
-            color: white;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-
-        /* Animation for Table Rows */
-        tr {
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        tr:nth-child(even) {
-            animation-delay: 0.2s;
-        }
-
-        tr:nth-child(odd) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Image Overlay Styling */
-        .container {
-            position: relative;
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        .image {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .overlay {
-            position: absolute;
-            bottom: 100%;
-            left: 0;
-            right: 0;
-            background-color: orangered;
-            overflow: hidden;
-            width: 100%;
-            height: 0;
-            transition: .5s ease;
-        }
-
-        .container:hover .overlay {
-            bottom: 0;
-            height: 100%;
-        }
-
-        .text {
-            white-space: nowrap;
-            color: white;
-            font-size: 20px;
-            position: absolute;
-            overflow: hidden;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Large Button Styling */
         .btn-large {
             display: inline-block;
             padding: 15px 30px;
             font-size: 20px;
-            background-color: #007BFF;
+            background-color: orangered;
             color: white;
             text-align: center;
             text-decoration: none;
@@ -157,32 +211,73 @@
             transform: scale(1.1);
         }
 
-        /* Scrollable Table Container */
-        .table-container {
-            overflow-x: auto;
+        /* Fixed Save Button Styles */
+        .fixed-save-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000; /* Ensure it stays above other elements */
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: orangered;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .fixed-save-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Table for Small Screens */
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            thead th {
+                top: 0;
+            }
+
+            .sticky-col {
+                left: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Top Right Image -->
-    <div style="position: absolute; top: 10px; right: 10px;">
-        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" style="width: 250px; height: 250px;" class="mt-2 mb-2 transition transform hover:scale-105">
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
+
+    <!-- Logo and Images -->
+    <div class="logo-container">
+        <img src="{{ asset('logo.png') }}" alt="Logo" class="first">
+        <img src="{{ asset('aptiv.png') }}" alt="Aptiv" class="second">
     </div>
 
-    <!-- Centered Logo with Overlay -->
-    <div style="text-align: center;">
-        <div class="container">
-            <img src="{{ asset('logo.png') }}" alt="Avatar" class="image">
-            <div class="overlay">
-                <h1 class="text">ALWAYS DO THE RIGHT THINGS, THE RIGHT WAY</h1>
-            </div>
-        </div>
+    <!-- Developeby Logo -->
+    <div class="developeby-container">
+        <img src="{{ asset('developeby.png') }}" alt="Developed By">
     </div>
 
     <!-- Page Heading -->
-    <h1 style="text-align: center; margin-top: 0;">Welcome To Contre Maitre Interface</h1>
+    <h1>Welcome To Contre Maitre Interface</h1>
     <h1>Twist Area</h1>
-    <h2>Fill the form below to create a new Torsado:</h2>
+    <h3>Fill the form below to create a new Torsado:</h3>
 
     <!-- Shift Logic -->
     @php
@@ -203,12 +298,23 @@
         </div>
     @endif
 
-    <!-- Scrollable Table Container -->
-    <div class="table-container">
+    <!-- Form -->
+    <form action="{{ route('userto.storedata') }}" method="post">
+        @csrf
+        <input type="hidden" name="name_mc" value="{{ Auth::user()->name }}" required>
+        <input type="hidden" name="group" value="{{ $group }}">
         <table border="1">
             <thead>
                 <tr>
-                    <th>Machines</th>
+                    <th colspan="1"></th>
+                    <th colspan="4">Scrap</th>
+                    <th colspan="5">2H</th>
+                    <th colspan="5">4H</th>
+                    <th colspan="5">6H</th>
+                    <th colspan="7">8H</th>
+                </tr>
+                <tr>
+                    <th class="sticky-col">Machines</th>
                     <th>Matricule</th>
                     <th>Echantillon CFA</th>
                     <th>Refus Machine</th>
@@ -238,52 +344,64 @@
                 </tr>
             </thead>
             <tbody>
-                <form action="{{ route('userto.storedata') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="name_mc" value="{{ Auth::user()->name }}" required>
-                    <input type="hidden" name="group" value="{{ $group }}">
-                    @foreach ($machines as $m)
-                        <input type="hidden" name="name[]" value="{{ $m->machines }}">
-                        <input type="hidden" name="machine_id[]" value="{{ $m->id }}">
-                        <input type="hidden" name="date[]" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                        <tr>
-                            <td>{{ $m->machines }}</td>
-                            <td><input type="number" name="matricule[]" step="any"></td>
-                            <td><input type="number" name="echantillon_cfa[]" step="any"></td>
-                            <td><input type="number" name="refus_machine[]" step="any"></td>
-                            <td><input type="number" name="refus_prototype[]" step="any"></td>
-                            <td><input type="number" name="refus_mc[]" step="any"></td>
-                            <td><input type="number" name="production[]" step="any"></td>
-                            <td><input type="number" name="nb_reg[]" step="any"></td>
-                            <td><input type="number" name="maint[]" step="any"></td>
-                            <td><input type="number" name="pcl[]" step="any"></td>
-                            <td><input type="number" name="refus_mc2[]" step="any"></td>
-                            <td><input type="number" name="production2[]" step="any"></td>
-                            <td><input type="number" name="nb_reg2[]" step="any"></td>
-                            <td><input type="number" name="maint2[]" step="any"></td>
-                            <td><input type="number" name="pcl2[]" step="any"></td>
-                            <td><input type="number" name="refus_mc3[]" step="any"></td>
-                            <td><input type="number" name="production3[]" step="any"></td>
-                            <td><input type="number" name="nb_reg3[]" step="any"></td>
-                            <td><input type="number" name="maint3[]" step="any"></td>
-                            <td><input type="number" name="pcl3[]" step="any"></td>
-                            <td><input type="number" name="refus_mc4[]" step="any"></td>
-                            <td><input type="number" name="production4[]" step="any"></td>
-                            <td><input type="number" name="nb_reg4[]" step="any"></td>
-                            <td><input type="number" name="maint4[]" step="any"></td>
-                            <td><input type="number" name="pcl4[]" step="any"></td>
-                            <td><input type="number" name="nb_carte_kan[]" step="any"></td>
-                            <td><input type="number" name="nb_heures[]" step="any"></td>
-                        </tr>
-                    @endforeach
-                    <button type="submit" class="btn-large">Save</button>
-                </form>
+                @foreach ($machines as $m)
+                    <input type="hidden" name="name[]" value="{{ $m->machines }}">
+                    <input type="hidden" name="machine_id[]" value="{{ $m->id }}">
+                    <input type="hidden" name="date[]" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+                    <tr class="machine-row">
+                        <td class="sticky-col">{{ $m->machines }}</td>
+                        <td><input type="number" name="matricule[]" step="any"></td>
+                        <td><input type="number" name="echantillon_cfa[]" step="any"></td>
+                        <td><input type="number" name="refus_machine[]" step="any"></td>
+                        <td><input type="number" name="refus_prototype[]" step="any"></td>
+                        <td><input type="number" name="refus_mc[]" step="any"></td>
+                        <td><input type="number" name="production[]" step="any"></td>
+                        <td><input type="number" name="nb_reg[]" step="any"></td>
+                        <td><input type="number" name="maint[]" step="any"></td>
+                        <td><input type="number" name="pcl[]" step="any"></td>
+                        <td><input type="number" name="refus_mc2[]" step="any"></td>
+                        <td><input type="number" name="production2[]" step="any"></td>
+                        <td><input type="number" name="nb_reg2[]" step="any"></td>
+                        <td><input type="number" name="maint2[]" step="any"></td>
+                        <td><input type="number" name="pcl2[]" step="any"></td>
+                        <td><input type="number" name="refus_mc3[]" step="any"></td>
+                        <td><input type="number" name="production3[]" step="any"></td>
+                        <td><input type="number" name="nb_reg3[]" step="any"></td>
+                        <td><input type="number" name="maint3[]" step="any"></td>
+                        <td><input type="number" name="pcl3[]" step="any"></td>
+                        <td><input type="number" name="refus_mc4[]" step="any"></td>
+                        <td><input type="number" name="production4[]" step="any"></td>
+                        <td><input type="number" name="nb_reg4[]" step="any"></td>
+                        <td><input type="number" name="maint4[]" step="any"></td>
+                        <td><input type="number" name="pcl4[]" step="any"></td>
+                        <td><input type="number" name="nb_carte_kan[]" step="any"></td>
+                        <td><input type="number" name="nb_heures[]" step="any"></td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-    </div>
+        <button type="submit" class="btn-large fixed-save-button">Save</button>
+    </form>
 
     <!-- Navigation Buttons -->
     <a href="{{ route('admin.torsado') }}" class="btn-large">Display Data</a>
     <a href="{{ route('dashboard') }}" class="btn-large">Back to Dashboard</a>
+
+    <!-- JavaScript for Dark Mode and Row Highlight -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.machine-row');
+            rows.forEach(row => {
+                row.addEventListener('click', function() {
+                    rows.forEach(r => r.classList.remove('highlight'));
+                    this.classList.add('highlight');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
