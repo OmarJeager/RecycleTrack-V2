@@ -8,7 +8,6 @@
 
     <div class="flex justify-between items-center mt-2 mb-2">
         <img src="{{ asset('logo.png') }}" alt="Aptiv Image" class="transition transform hover:scale-105">
-        <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" class="transition transform hover:scale-105">
     </div>
     <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -63,5 +62,7 @@
         
     </div>
 </div>
-
+<div class="absolute bottom-0 right-0 mb-2 mr-2">
+    <img src="{{ asset('developeby.png') }}" alt="Aptiv Image" class="transition transform hover:scale-105">
+</div>
 </x-app-layout>
