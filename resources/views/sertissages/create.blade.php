@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contre Maitre Interface</title>
     <style>
-        /* General Styles */
+        /*General Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -20,7 +20,7 @@
             background-color: #333;
             color: #f4f7f6;
         }
-
+ 
         h1, h3 {
             text-align: center;
             margin-top: 0;

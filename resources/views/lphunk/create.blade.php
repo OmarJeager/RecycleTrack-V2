@@ -276,8 +276,8 @@
 
     <!-- Page Heading -->
     <h1>Welcome To Contre Maitre Interface</h1>
-    <h1>Crimping Area</h1>
-    <h3>Fill in the form below to record the daily production of the crimping area:</h3>
+    <h1>LpHunk Area</h1>
+    <h3>Fill in the form below to record the daily production of the LpHunk :</h3>
 
     <!-- Shift Logic -->
     @php

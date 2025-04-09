@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\AdminComposeTow;
 use App\Http\Controllers\AdminComposoFourController;
 use App\Http\Controllers\AdminComposoThreeController;
@@ -30,7 +29,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -167,7 +166,7 @@ Route::get('/admin/coupeone/create',[AdminCoupeOneController::class,'create'])
 ->middleware(['auth','admin'])
 ->name('coupeone.create');
 Route::post('/admin/coupeone/store',[AdminCoupeOneController::class,'store'])
-->middleware(['auth','admin'])
+->middleware( ['auth','admin'])
 ->name('coupeone.store');
 // show data coupe one to admin
 Route::get('/admin/coupeone/index',[AdminCoupeOneController::class,'index'])
